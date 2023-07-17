@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.util.Objects;
 
 @Getter
@@ -23,6 +24,10 @@ public class Horario {
     private int idAula;
     @Column(name = "id_dia")
     private int idDia;
+    @Column(name = "inicio")
+    private Time inicio;
+    @Column(name = "fim")
+    private Time fim;
     @Column(name = "id_sala")
     private Integer idSala;
 

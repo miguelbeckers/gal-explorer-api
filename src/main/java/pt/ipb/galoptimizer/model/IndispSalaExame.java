@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 @Getter
@@ -24,6 +25,10 @@ public class IndispSalaExame {
     private int idSala;
     @Column(name = "dia")
     private Date dia;
+    @Column(name = "inicio")
+    private Time inicio;
+    @Column(name = "fim")
+    private Time fim;
 
     @Override
     public boolean equals(Object o) {

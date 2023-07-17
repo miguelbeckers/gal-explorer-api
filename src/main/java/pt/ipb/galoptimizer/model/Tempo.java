@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
 
@@ -15,29 +14,27 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "indisp_escola_exame", schema = "2022_2023_1_horarios")
-public class IndispEscolaExame {
+@Table(name = "tempo", schema = "2022_2023_1_horarios")
+public class Tempo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
-    private int id;
-    @Column(name = "dia")
-    private Date dia;
     @Column(name = "inicio")
     private Time inicio;
     @Column(name = "fim")
     private Time fim;
+    @Column(name = "descricao")
+    private String descricao;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IndispEscolaExame that = (IndispEscolaExame) o;
-        return id == that.id;
+        Tempo that = (Tempo) o;
+        return Objects.equals(inicio, that.inicio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(inicio);
     }
 }

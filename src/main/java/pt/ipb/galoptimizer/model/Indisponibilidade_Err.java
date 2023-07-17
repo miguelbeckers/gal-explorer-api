@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Time;
 import java.util.Objects;
 
 @Getter
@@ -23,17 +24,21 @@ public class Indisponibilidade_Err {
     private Integer idAno;
     @Column(name = "id_dia")
     private int idDia;
+    @Column(name = "inicio")
+    private Time inicio;
+    @Column(name = "fim")
+    private Time fim;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Indisponibilidade_Err that = (Indisponibilidade_Err) o;
-        return idDia == that.idDia && Objects.equals(tipo, that.tipo) && Objects.equals(idTipo, that.idTipo) && Objects.equals(idAno, that.idAno);
+        return idDia == that.idDia && Objects.equals(tipo, that.tipo) && Objects.equals(idTipo, that.idTipo) && Objects.equals(idAno, that.idAno) && Objects.equals(inicio, that.inicio) && Objects.equals(fim, that.fim);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(tipo, idTipo, idAno, idDia);
+        return Objects.hash(tipo, idTipo, idAno, idDia, inicio, fim);
     }
 }
