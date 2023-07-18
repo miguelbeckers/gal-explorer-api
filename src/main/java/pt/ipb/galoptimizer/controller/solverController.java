@@ -13,8 +13,8 @@ import pt.ipb.galoptimizer.repository.TempoRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/test")
-public class testController {
+@RequestMapping("/solver")
+public class solverController {
     @Autowired
     private HorarioRepository horarioRepository;
     @Autowired
