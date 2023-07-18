@@ -14,7 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 //@Entity
 //@Table(name = "entity_checksum", schema = "2022_2023_1_horarios")
-public class EntityChecksum_Err {
+//TODO: Esta entidade não pode ser persistida pois não possúi um id
+public class EntityChecksum {
     @Column(name = "id_chkp")
     private int idChkp;
     @Column(name = "id_entity")
@@ -26,7 +27,7 @@ public class EntityChecksum_Err {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EntityChecksum_Err that = (EntityChecksum_Err) o;
+        EntityChecksum that = (EntityChecksum) o;
         return idChkp == that.idChkp && idEntity == that.idEntity && Objects.equals(checksum, that.checksum);
     }
 

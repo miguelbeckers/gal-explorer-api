@@ -15,7 +15,8 @@ import java.util.Objects;
 @NoArgsConstructor
 //@Entity
 //@Table(name = "indisponibilidade", schema = "2022_2023_1_horarios")
-public class Indisponibilidade_Err {
+//TODO: Esta entidade não pode ser persistida pois não possúi um id
+public class Indisponibilidade {
     @Column(name = "tipo")
     private Object tipo;
     @Column(name = "id_tipo")
@@ -33,7 +34,7 @@ public class Indisponibilidade_Err {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Indisponibilidade_Err that = (Indisponibilidade_Err) o;
+        Indisponibilidade that = (Indisponibilidade) o;
         return idDia == that.idDia && Objects.equals(tipo, that.tipo) && Objects.equals(idTipo, that.idTipo) && Objects.equals(idAno, that.idAno) && Objects.equals(inicio, that.inicio) && Objects.equals(fim, that.fim);
     }
 

@@ -16,7 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 //@Entity
 //@Table(name = "horario_semestre", schema = "2022_2023_1_horarios")
-public class HorarioSemestre_Err {
+//TODO: Esta entidade não pode ser persistida pois não possúi um id
+public class HorarioSemestre {
     @Column(name = "versao")
     private int versao;
     @Column(name = "data")
@@ -38,7 +39,7 @@ public class HorarioSemestre_Err {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HorarioSemestre_Err that = (HorarioSemestre_Err) o;
+        HorarioSemestre that = (HorarioSemestre) o;
         return versao == that.versao && Objects.equals(data, that.data) && Objects.equals(inicio, that.inicio) && Objects.equals(fim, that.fim) && Objects.equals(docentes, that.docentes) && Objects.equals(cursos, that.cursos) && Objects.equals(disciplinas, that.disciplinas) && Objects.equals(sala, that.sala);
     }
 
