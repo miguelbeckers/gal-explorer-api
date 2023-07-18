@@ -16,7 +16,8 @@ import java.util.Objects;
 @NoArgsConstructor
 //@Entity
 //@Table(name = "gal", schema = "2022_2023_1_horarios")
-public class Gal_Err {
+//TODO: Não pode ser entidade porque não tem id
+public class Gal {
     @Column(name = "inicio")
     private Date inicio;
     @Column(name = "fim")
@@ -42,7 +43,7 @@ public class Gal_Err {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Gal_Err galErr = (Gal_Err) o;
+        Gal galErr = (Gal) o;
         return semestre == galErr.semestre && versao == galErr.versao && ano1 == galErr.ano1 && ano2 == galErr.ano2 && Objects.equals(inicio, galErr.inicio) && Objects.equals(fim, galErr.fim) && Objects.equals(data, galErr.data) && Objects.equals(descricao, galErr.descricao) && Objects.equals(codEscola, galErr.codEscola) && Objects.equals(emails, galErr.emails);
     }
 
