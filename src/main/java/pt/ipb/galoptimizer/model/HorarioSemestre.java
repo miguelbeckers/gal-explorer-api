@@ -14,9 +14,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@Entity
-//@Table(name = "horario_semestre", schema = "2022_2023_1_horarios")
-//TODO: Esta entidade não pode ser persistida pois não possúi um id
+//It cannot be an entity because it has no id
 public class HorarioSemestre {
     @Column(name = "versao")
     private int versao;
@@ -34,17 +32,4 @@ public class HorarioSemestre {
     private String disciplinas;
     @Column(name = "sala")
     private String sala;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HorarioSemestre that = (HorarioSemestre) o;
-        return versao == that.versao && Objects.equals(data, that.data) && Objects.equals(inicio, that.inicio) && Objects.equals(fim, that.fim) && Objects.equals(docentes, that.docentes) && Objects.equals(cursos, that.cursos) && Objects.equals(disciplinas, that.disciplinas) && Objects.equals(sala, that.sala);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(versao, data, inicio, fim, docentes, cursos, disciplinas, sala);
-    }
 }

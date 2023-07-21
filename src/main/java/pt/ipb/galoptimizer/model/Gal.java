@@ -14,9 +14,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@Entity
-//@Table(name = "gal", schema = "2022_2023_1_horarios")
-//TODO: Não pode ser entidade porque não tem id
+//It cannot be an entity because it has no id
 public class Gal {
     @Column(name = "inicio")
     private Date inicio;
@@ -38,17 +36,4 @@ public class Gal {
     private Short codEscola;
     @Column(name = "emails")
     private String emails;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Gal galErr = (Gal) o;
-        return semestre == galErr.semestre && versao == galErr.versao && ano1 == galErr.ano1 && ano2 == galErr.ano2 && Objects.equals(inicio, galErr.inicio) && Objects.equals(fim, galErr.fim) && Objects.equals(data, galErr.data) && Objects.equals(descricao, galErr.descricao) && Objects.equals(codEscola, galErr.codEscola) && Objects.equals(emails, galErr.emails);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(inicio, fim, semestre, versao, data, descricao, ano1, ano2, codEscola, emails);
-    }
 }
