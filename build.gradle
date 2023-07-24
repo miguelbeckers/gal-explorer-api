@@ -29,10 +29,6 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-	implementation 'org.optaplanner:optaplanner-bom:9.38.0.Final'
-	implementation 'org.optaplanner:optaplanner-spring-boot-starter:9.38.0.Final'
-	testImplementation("org.optaplanner:optaplanner-test")
 }
 
 tasks.named('test') {
