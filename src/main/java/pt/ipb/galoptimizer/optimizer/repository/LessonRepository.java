@@ -24,6 +24,10 @@ public class LessonRepository {
         return item;
     }
 
+    public void saveAll(List<Lesson> items) {
+        lessons.addAll(items);
+    }
+
     public void deleteById(Long id) {
         lessons.removeIf(item -> item.getId().equals(id));
     }

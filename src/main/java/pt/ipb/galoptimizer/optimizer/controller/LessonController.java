@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pt.ipb.galoptimizer.optimizer.service.LessonService;
 
@@ -25,4 +26,9 @@ public class LessonController {
         return ResponseEntity.ok(lessonService.findAll());
     }
 
+    @PostMapping("/load")
+    public ResponseEntity<Object> loadAll() {
+        lessonService.loadAll();
+        return ResponseEntity.ok().build();
+    }
 }
