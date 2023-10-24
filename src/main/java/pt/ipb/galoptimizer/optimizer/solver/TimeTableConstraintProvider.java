@@ -58,8 +58,7 @@ public class TimeTableConstraintProvider implements ConstraintProvider {
     private Constraint teacherTimeEfficiency(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Lesson.class)
-                .join(Lesson.class,
-                        Joiners.equal(Lesson::getTeacher))
+                .join(Lesson.class,                        Joiners.equal(Lesson::getTeacher))
                 .filter((lesson1, lesson2) -> {
                     Duration between = Duration.between(lesson1.getTimeslot().getEndTime(),
                             lesson2.getTimeslot().getStartTime());

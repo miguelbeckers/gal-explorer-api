@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pt.ipb.galoptimizer.optimizer.model.Lesson;
 import pt.ipb.galoptimizer.optimizer.model.Timetable;
+import pt.ipb.galoptimizer.optimizer.service.ClassroomService;
+import pt.ipb.galoptimizer.optimizer.service.LessonService;
+import pt.ipb.galoptimizer.optimizer.service.TimeslotService;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -25,9 +27,18 @@ public class TimetableController {
     @Autowired
     private SolverManager<Timetable, UUID> solverManager;
 
+    @Autowired
+    private ClassroomService classroomService;
+
+    @Autowired
+    private LessonService lessonService;
+
+    @Autowired
+    private TimeslotService timeslotService;
+
     @PostMapping("/solve")
     public ResponseEntity<Object> solve() {
-        Timetable problem = new Timetable(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        Timetable problem = new Timetable(timeslotService.findAll(), classroomService.findAll(), lessonService.findAll());
 
         SolverJob<Timetable, UUID> solverJob = solverManager.solve(problemId, problem);
         Timetable solution;
@@ -39,8 +50,7 @@ public class TimetableController {
         }
 
         for(Lesson lesson: solution.getLessons()) {
-//            lessonService.update(lesson);
-            System.out.println(lesson);
+            lessonService.update(lesson);
         }
 
         return ResponseEntity.ok().body(solution);
