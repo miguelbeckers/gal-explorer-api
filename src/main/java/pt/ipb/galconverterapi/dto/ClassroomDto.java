@@ -1,5 +1,6 @@
 package pt.ipb.galconverterapi.dto;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -11,4 +12,7 @@ public class ClassroomDto {
     private String name;
     private List<TimeslotDto> unavailability = new ArrayList<>();
     private List<ClassroomResourceDto> classroomResourceDtos = new ArrayList<>();
+
+    private String abbreviation;
+    private int idTipo;
 }

@@ -61,6 +61,7 @@ public class ProfessorDtoConverter {
                     () -> new RuntimeException("Professor [" + professor.getId() + "] department not found")
             ));
 
+            //FIXME: filter not just by id but by type too
             List<Object[]> indisponibilidadesProfessor = indisponibilidades.stream()
                     .filter(indisponibilidade -> (int) indisponibilidade[1] == docente.getId())
                     .toList();
