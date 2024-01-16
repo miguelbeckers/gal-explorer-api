@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Department;
 import pt.ipb.galconverterapi.model._new.Professor;
 import pt.ipb.galconverterapi.model._new.Timeslot;
-import pt.ipb.galconverterapi.model.Docente;
-import pt.ipb.galconverterapi.repository.DocenteRepository;
-import pt.ipb.galconverterapi.repository.HorarioRepository;
+import pt.ipb.galconverterapi.model.old.Docente;
+import pt.ipb.galconverterapi.repository.old.DocenteRepository;
+import pt.ipb.galconverterapi.repository.old.HorarioRepository;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
