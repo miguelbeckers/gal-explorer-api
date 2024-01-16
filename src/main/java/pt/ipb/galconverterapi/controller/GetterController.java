@@ -6,29 +6,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.modelToDto.*;
+import pt.ipb.galconverterapi.converter.oldToNew.*;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/get")
 public class GetterController {
     @Autowired
-    private DepartmentDtoConverter departmentDtoConverter;
+    private DepartmentConverter departmentConverter;
 
     @Autowired
-    private PeriodDtoConverter periodDtoConverter;
+    private PeriodConverter periodConverter;
 
     @Autowired
-    private ProfessorDtoConverter professorDtoConverter;
+    private ProfessorConverter professorConverter;
 
     @Autowired
-    private ResourceDtoConverter resourceDtoConverter;
+    private ResourceConverter resourceConverter;
 
     @Autowired
-    private SubjectTypeDtoConverter subjectTypeDtoConverter;
+    private SubjectTypeConverter subjectTypeConverter;
 
     @Autowired
-    private TimeslotDtoConverter timeslotDtoConverter;
+    private TimeslotConverter timeslotConverter;
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
@@ -37,31 +37,31 @@ public class GetterController {
 
     @GetMapping("/departments")
     public ResponseEntity<Object> getDepartments() {
-        return ResponseEntity.ok().body(departmentDtoConverter.convert());
+        return ResponseEntity.ok().body(departmentConverter.convert());
     }
 
     @GetMapping("/periods")
     public ResponseEntity<Object> getPeriods() {
-        return ResponseEntity.ok().body(periodDtoConverter.convert());
+        return ResponseEntity.ok().body(periodConverter.convert());
     }
 
     @GetMapping("/professors")
     public ResponseEntity<Object> getProfessors() {
-        return ResponseEntity.ok().body(professorDtoConverter.convert());
+        return ResponseEntity.ok().body(professorConverter.convert());
     }
 
     @GetMapping("/resources")
     public ResponseEntity<Object> getResources() {
-        return ResponseEntity.ok().body(resourceDtoConverter.convert());
+        return ResponseEntity.ok().body(resourceConverter.convert());
     }
 
     @GetMapping("/subjectTypes")
     public ResponseEntity<Object> getSubjectTypes() {
-        return ResponseEntity.ok().body(subjectTypeDtoConverter.convert());
+        return ResponseEntity.ok().body(subjectTypeConverter.convert());
     }
 
     @GetMapping("/timeslots")
     public ResponseEntity<Object> getTimeslots() {
-        return ResponseEntity.ok().body(timeslotDtoConverter.convert());
+        return ResponseEntity.ok().body(timeslotConverter.convert());
     }
 }
