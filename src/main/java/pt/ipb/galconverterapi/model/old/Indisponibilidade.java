@@ -15,8 +15,8 @@ import java.sql.Time;
 @Entity
 @Table(name = "indisponibilidade", schema = "2022_2023_1_horarios")
 public class Indisponibilidade {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
     @Column(name = "tipo")

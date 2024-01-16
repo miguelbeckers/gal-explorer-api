@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 public class Student {
     private Long id;
-    private String code;
     private List<SubjectCourse> subjectCourses = new ArrayList<>();
 }

@@ -5,9 +5,13 @@ import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Classroom;
 import pt.ipb.galconverterapi.model._new.ClassroomResource;
 import pt.ipb.galconverterapi.model._new.Timeslot;
-import pt.ipb.galconverterapi.model.old.Sala;
-import pt.ipb.galconverterapi.repository.old.SalaRepository;
+import pt.ipb.galconverterapi.model.old.*;
+import pt.ipb.galconverterapi.repository._new.ClassroomResourceRepository;
+import pt.ipb.galconverterapi.repository._new.TimeslotRepository;
 import pt.ipb.galconverterapi.repository.old.HorarioRepository;
+import pt.ipb.galconverterapi.repository.old.IndisponibilidadeRepository;
+import pt.ipb.galconverterapi.repository.old.RecursoSalaRepository;
+import pt.ipb.galconverterapi.repository.old.SalaRepository;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -19,59 +23,76 @@ public class ClassroomConverter {
     private SalaRepository salaRepository;
 
     @Autowired
-    private HorarioRepository horarioRepository;
+    private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
-    private TimeslotConverter timeslotConverter;
+    private RecursoSalaRepository recursoSalaRepository;
 
     @Autowired
-    private ClassroomResourceConverter classroomResourceConverter;
+    private TimeslotRepository timeslotRepository;
+
+    @Autowired
+    private ClassroomResourceRepository classroomResourceRepository;
 
     public List<Classroom> convert() {
         List<Sala> salas = salaRepository.findAll();
+
+        List<Indisponibilidade> indisponibilidades = indisponibilidadeRepository.findAll();
+        List<RecursoSala> recursoSalas = recursoSalaRepository.findAll();
+
+        List<Timeslot> timeslots = timeslotRepository.findAll();
+        List<ClassroomResource> classroomResources = classroomResourceRepository.findAll();
+
         List<Classroom> classrooms = new ArrayList<>();
-
-        List<Timeslot> timeslots = timeslotConverter.convert();
-        List<ClassroomResource> classroomResources = classroomResourceConverter.convert();
-
-        List<Object[]> indisponibilidades = horarioRepository.findIndisponibilidades();
-
         for (Sala sala : salas) {
             Classroom classroom = new Classroom();
             classroom.setId((long) sala.getId());
             classroom.setName(sala.getNome());
             classroom.setAbbreviation(sala.getAbrev());
 
-            //FIXME: filter not just by id but by type too
-            List<Object[]> indisponibilidadesClassroom = indisponibilidades.stream()
-                    .filter(indisponibilidade -> (int) indisponibilidade[1] == sala.getId())
+            List<Indisponibilidade> indisponibilidadesSala = indisponibilidades.stream()
+                    .filter(indisponibilidade -> indisponibilidade.getIdTipo() == sala.getId()
+                            && indisponibilidade.getTipo().equals("S"))
                     .toList();
 
             List<Timeslot> classroomUnavailability = new ArrayList<>();
-            for (Object[] indisponibilidade : indisponibilidadesClassroom) {
-                classroomUnavailability.add(timeslots.stream()
-                        .filter(timeslot ->
-                                timeslot.getDayOfWeek().getValue() == (int) indisponibilidade[3]
-                                        && timeslot.getStartTime().equals(indisponibilidade[4])
-                                        && timeslot.getEndTime().equals(indisponibilidade[5]))
+            for (Indisponibilidade indisponibilidade : indisponibilidadesSala) {
+                Timeslot timeslot = timeslots.stream()
+                        .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(indisponibilidade.getIdDia())))
+                        .filter(t -> t.getStartTime().equals(indisponibilidade.getInicio().toLocalTime()))
+                        .filter(t -> t.getEndTime().equals(indisponibilidade.getFim().toLocalTime()))
                         .findFirst()
-                        .orElseThrow(() -> new RuntimeException("Timeslot (" +
-                                "day[" + DayOfWeek.of((int) indisponibilidade[3]) + "]," +
-                                "startTime[" + indisponibilidade[4] + "]," +
-                                "startTime[" + indisponibilidade[5] + "]," +
-                                "not found"))
-                );
+                        .orElseThrow(
+                                () -> new RuntimeException("Timeslot [" + indisponibilidade.getIdDia() +
+                                        ", " + indisponibilidade.getInicio() +
+                                        ", " + indisponibilidade.getFim() + "] not found")
+                        );
+
+                classroomUnavailability.add(timeslot);
             }
 
             classroom.setUnavailability(classroomUnavailability);
 
-            //TODO: finish implementing the resource association
-//            List<ClassroomResourceDto> classroomClassroomResources = classroomResources.stream()
-//                    .filter(classroomResource -> classroomResource.getId().equals())
+            List<RecursoSala> recursoSalasSala = recursoSalas.stream()
+                    .filter(recursoSala -> recursoSala.getIdSala() == sala.getId())
+                    .toList();
 
+            List<ClassroomResource> ClassroomClassroomResources = new ArrayList<>();
+            for (RecursoSala recursoSala : recursoSalasSala) {
+                ClassroomResource classroomResource = classroomResources.stream()
+                        .filter(r -> r.getId().equals((long)recursoSala.getId()))
+                        .findFirst()
+                        .orElseThrow(
+                                () -> new RuntimeException("ClassroomResource [" + recursoSala.getId() + "] not found")
+                        );
+
+                ClassroomClassroomResources.add(classroomResource);
+            }
+
+            classroom.setClassroomResources(ClassroomClassroomResources);
             classrooms.add(classroom);
         }
 
-        return new ArrayList<>();
+        return classrooms;
     }
 }

@@ -15,10 +15,12 @@ import java.util.Objects;
 @Entity
 @Table(name = "sala", schema = "2022_2023_1_horarios")
 public class Sala {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    //FIXME: recepção doesn't have id!
     @Column(name = "id_tipo")
     private int idTipo;
     @Column(name = "nome")

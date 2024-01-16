@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.LessonResource;
 import pt.ipb.galconverterapi.model._new.Resource;
 import pt.ipb.galconverterapi.model.old.RecursoDisciplina;
+import pt.ipb.galconverterapi.repository._new.ResourceRepository;
 import pt.ipb.galconverterapi.repository.old.RecursoDisciplinaRepository;
 
 import java.util.ArrayList;
@@ -16,13 +17,13 @@ public class LessonResourceConverter {
     private RecursoDisciplinaRepository recursoDisciplinaRepository;
 
     @Autowired
-    private ResourceConverter resourceConverter;
+    private ResourceRepository resourceRepository;
 
     public List<LessonResource> convert(){
         List<RecursoDisciplina> recursoDisciplinas = recursoDisciplinaRepository.findAll();
         List<LessonResource> lessonResources = new ArrayList<>();
 
-        List<Resource> resources = resourceConverter.convert();
+        List<Resource> resources = resourceRepository.findAll();
 
         for(RecursoDisciplina recursoDisciplina : recursoDisciplinas){
             LessonResource lessonResource = new LessonResource();
@@ -40,7 +41,7 @@ public class LessonResourceConverter {
                     .findFirst()
                     .orElseThrow(
                             () -> new RuntimeException("LessonResource [" + lessonResource.getId() + "] resource not found"))
-                    );
+            );
 
             lessonResources.add(lessonResource);
         }

@@ -6,8 +6,12 @@ import pt.ipb.galconverterapi.model._new.Department;
 import pt.ipb.galconverterapi.model._new.Professor;
 import pt.ipb.galconverterapi.model._new.Timeslot;
 import pt.ipb.galconverterapi.model.old.Docente;
+import pt.ipb.galconverterapi.model.old.Indisponibilidade;
+import pt.ipb.galconverterapi.repository._new.DepartmentRepository;
+import pt.ipb.galconverterapi.repository._new.TimeslotRepository;
 import pt.ipb.galconverterapi.repository.old.DocenteRepository;
 import pt.ipb.galconverterapi.repository.old.HorarioRepository;
+import pt.ipb.galconverterapi.repository.old.IndisponibilidadeRepository;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -15,31 +19,26 @@ import java.util.List;
 
 @Component
 public class ProfessorConverter {
-//    @Autowired
-//    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
-    private HorarioRepository horarioRepository;
-
     @Autowired
     private DocenteRepository docenteRepository;
 
     @Autowired
-    private TimeslotConverter timeslotConverter;
+    private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
-    private DepartmentConverter departmentConverter;
+    private TimeslotRepository timeslotRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     public List<Professor> convert() {
-        //FIXME: change horarioRepository to indisponibilidadeRepository
-        List<Object[]> indisponibilidades = horarioRepository.findIndisponibilidades();
-
-        List<Timeslot> timeslots = timeslotConverter.convert();
-        List<Department> departments = departmentConverter.convert();
-
         List<Docente> docentes = docenteRepository.findAll();
-        List<Professor> professors = new ArrayList<>();
+        List<Indisponibilidade> indisponibilidades = indisponibilidadeRepository.findAll();
 
+        List<Timeslot> timeslots = timeslotRepository.findAll();
+        List<Department> departments = departmentRepository.findAll();
+
+        List<Professor> professors = new ArrayList<>();
         for (Docente docente : docentes) {
             Professor professor = new Professor();
             professor.setId((long) docente.getId());
@@ -56,28 +55,30 @@ public class ProfessorConverter {
                     .filter(department -> department.getId().equals((long) docente.getIdDepart()))
                     .findFirst()
                     .orElseThrow(
-                            () -> new RuntimeException("Professor [" + professor.getId() + "] department not found"))
+                            () -> new RuntimeException("Department [" + docente.getIdDepart() + "] not found")
+                    )
             );
 
-            //FIXME: filter not just by id but by type too
-            List<Object[]> indisponibilidadesProfessor = indisponibilidades.stream()
-                    .filter(indisponibilidade -> (int) indisponibilidade[1] == docente.getId())
+            List<Indisponibilidade> indisponibilidadesProfessor = indisponibilidades.stream()
+                    .filter(indisponibilidade -> indisponibilidade.getIdTipo() == docente.getId()
+                            && indisponibilidade.getTipo().equals("D"))
                     .toList();
 
+            //FIXME: the timeslots are not being applied to all the professors that have unavailability
             List<Timeslot> professorUnavailability = new ArrayList<>();
-            for (Object[] indisponibilidade : indisponibilidadesProfessor) {
-                professorUnavailability.add(timeslots.stream()
-                        .filter(timeslot ->
-                                timeslot.getDayOfWeek().getValue() == (int) indisponibilidade[3]
-                                        && timeslot.getStartTime().equals(indisponibilidade[4])
-                                        && timeslot.getEndTime().equals(indisponibilidade[5]))
+            for (Indisponibilidade indisponibilidade : indisponibilidadesProfessor) {
+                Timeslot timeslot = timeslots.stream()
+                        .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(indisponibilidade.getIdDia())))
+                        .filter(t -> t.getStartTime().equals(indisponibilidade.getInicio().toLocalTime()))
+                        .filter(t -> t.getEndTime().equals(indisponibilidade.getFim().toLocalTime()))
                         .findFirst()
-                        .orElseThrow(() -> new RuntimeException("Timeslot (" +
-                                "day[" + DayOfWeek.of((int) indisponibilidade[3]) + "]," +
-                                "startTime[" + indisponibilidade[4] + "]," +
-                                "startTime[" + indisponibilidade[5] + "]," +
-                                "not found"))
-                );
+                        .orElseThrow(
+                                () -> new RuntimeException("Timeslot [" + indisponibilidade.getIdDia() +
+                                        ", " + indisponibilidade.getInicio() +
+                                        ", " + indisponibilidade.getFim() + "] not found")
+                        );
+
+                professorUnavailability.add(timeslot);
             }
 
             professor.setUnavailability(professorUnavailability);

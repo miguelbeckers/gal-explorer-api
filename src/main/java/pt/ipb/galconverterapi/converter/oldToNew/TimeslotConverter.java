@@ -25,9 +25,11 @@ public class TimeslotConverter {
         List<Dia> dias = diaRepository.findAll();
 
         List<Timeslot> timeslots = new ArrayList<>();
+        long id = 1;
         for (Tempo tempo : tempos) {
             for (Dia dia : dias) {
                 Timeslot timeslot = new Timeslot();
+                timeslot.setId(id++);
                 timeslot.setDayOfWeek(DayOfWeek.of(dia.getWeekday()));
                 timeslot.setStartTime(tempo.getInicio().toLocalTime());
                 timeslot.setEndTime(tempo.getFim().toLocalTime());

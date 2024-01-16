@@ -4,5 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LessonConverter {
-//
+
+    public void convert() {
+
+    }
 }
