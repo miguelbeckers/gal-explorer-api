@@ -50,6 +50,9 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private LessonStudentRepository lessonStudentRepository;
 
+    @Autowired
+    private LessonRepository lessonRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         load();
@@ -71,6 +74,7 @@ public class DataLoader implements ApplicationRunner {
             subjectCourseRepository.load();
             studentRepository.load();
             lessonStudentRepository.load();
+            lessonRepository.load();
 
             System.out.println("Data successfully loaded!");
         } catch (Exception e) {

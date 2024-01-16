@@ -56,6 +56,9 @@ public class GetterController {
     @Autowired
     private LessonStudentRepository lessonStudentRepository;
 
+    @Autowired
+    private LessonRepository lessonRepository;
+
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
@@ -140,5 +143,10 @@ public class GetterController {
     @GetMapping("/lesson-students")
     public ResponseEntity<Object> getLessonStudents() {
         return ResponseEntity.ok().body(lessonStudentRepository.findAll());
+    }
+
+    @GetMapping("/lessons")
+    public ResponseEntity<Object> getLessons() {
+        return ResponseEntity.ok().body(lessonRepository.findAll());
     }
 }
