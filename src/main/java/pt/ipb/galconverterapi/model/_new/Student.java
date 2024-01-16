@@ -9,5 +9,5 @@ import java.util.List;
 public class Student {
     private Long id;
     private String code;
-    private List<SubjectCourse> subjectCoursDtos = new ArrayList<>();
+    private List<SubjectCourse> subjectCourses = new ArrayList<>();
 }
