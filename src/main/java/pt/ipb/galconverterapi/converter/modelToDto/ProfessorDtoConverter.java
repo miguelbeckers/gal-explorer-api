@@ -53,13 +53,12 @@ public class ProfessorDtoConverter {
             professor.setIpbCodEscola(docente.getIpbCodEscola());
             professor.setIpbEmpNum(docente.getIpbEmpNum());
 
-            Optional<DepartmentDto> optionalDepartment = departments.stream()
+            professor.setDepartmentDto(departments.stream()
                     .filter(department -> department.getId().equals((long) docente.getIdDepart()))
-                    .findFirst();
-
-            professor.setDepartmentDto(optionalDepartment.orElseThrow(
-                    () -> new RuntimeException("Professor [" + professor.getId() + "] department not found")
-            ));
+                    .findFirst()
+                    .orElseThrow(
+                            () -> new RuntimeException("Professor [" + professor.getId() + "] department not found"))
+            );
 
             //FIXME: filter not just by id but by type too
             List<Object[]> indisponibilidadesProfessor = indisponibilidades.stream()
