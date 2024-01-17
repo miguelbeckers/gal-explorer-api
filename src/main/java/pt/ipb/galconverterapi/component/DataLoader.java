@@ -54,7 +54,7 @@ public class DataLoader implements ApplicationRunner {
     private LessonRepository lessonRepository;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         load();
     }
 

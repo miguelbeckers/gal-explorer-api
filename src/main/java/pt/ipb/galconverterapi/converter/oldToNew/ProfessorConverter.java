@@ -45,12 +45,6 @@ public class ProfessorConverter {
             professor.setName(docente.getNome());
             professor.setAbbreviation(docente.getAbrev());
 
-            professor.setEti(docente.getEti());
-            professor.setMail(docente.getMail());
-            professor.setCredito(docente.getCredito());
-            professor.setIpbCodEscola(docente.getIpbCodEscola());
-            professor.setIpbEmpNum(docente.getIpbEmpNum());
-
             professor.setDepartment(departments.stream()
                     .filter(department -> department.getId().equals((long) docente.getIdDepart()))
                     .findFirst()

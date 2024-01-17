@@ -12,10 +12,4 @@ public class Professor {
     private String abbreviation;
     private Department department;
     private List<Timeslot> unavailability = new ArrayList<>();
-
-    private double eti;
-    private String mail;
-    private double credito;
-    private Integer ipbCodEscola;
-    private Integer ipbEmpNum;
 }
