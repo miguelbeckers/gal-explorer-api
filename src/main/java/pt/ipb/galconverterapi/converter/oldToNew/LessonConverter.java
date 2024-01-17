@@ -75,14 +75,17 @@ public class LessonConverter {
                     }
 
                     lesson.setProfessors(lessonProfessors);
+
+                    //TODO: insert lesson resources
+                    //TODO: insert lesson students
                     lessons.add(lesson);
                 }
             }
         }
 
-        for (Lesson lesson : lessons) {
-            printLesson(lesson);
-        }
+//        for (Lesson lesson : lessons) {
+//            printLesson(lesson);
+//        }
 
         return lessons;
     }
