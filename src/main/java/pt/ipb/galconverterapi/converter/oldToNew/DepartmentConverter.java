@@ -23,9 +23,6 @@ public class DepartmentConverter {
             department.setId((long) departamento.getId());
             department.setName(departamento.getNome());
             department.setAbbreviation(departamento.getAbrev());
-
-            department.setIpbCodEscola(departamento.getIpbCodEscola());
-            department.setIpbEmpCcusto(departamento.getIpbEmpCcusto());
             departments.add(department);
         }
 

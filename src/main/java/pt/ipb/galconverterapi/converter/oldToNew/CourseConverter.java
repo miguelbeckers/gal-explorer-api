@@ -68,12 +68,6 @@ public class CourseConverter {
             course.setName(curso.getNome());
             course.setAbbreviation(curso.getAbrev());
 
-            course.setIpbCodEscola(curso.getIpbCodEscola());
-            course.setIpbCodCurso(curso.getIpbCodCurso());
-            course.setIpbNPlano(curso.getIpbNPlano());
-            course.setInicioAulas(curso.getInicioAulas());
-            course.setFimAulas(curso.getFimAulas());
-
             DisciplinaCurso disciplinaCurso = disciplinaCursos.stream()
                     .filter(dc -> dc.getIdCurso() == curso.getId())
                     .findFirst()

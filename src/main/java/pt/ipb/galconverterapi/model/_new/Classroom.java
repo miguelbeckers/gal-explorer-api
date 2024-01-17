@@ -12,5 +12,4 @@ public class Classroom {
     private String abbreviation;
     private List<Timeslot> unavailability = new ArrayList<>();
     private List<ClassroomResource> classroomResources = new ArrayList<>();
-
 }

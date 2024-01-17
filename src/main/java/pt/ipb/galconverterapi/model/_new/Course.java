@@ -13,10 +13,4 @@ public class Course {
     private String abbreviation;
     private Department department;
     private List<Timeslot> unavailability = new ArrayList<>();
-
-    private Integer ipbCodEscola;
-    private Integer ipbCodCurso;
-    private Integer ipbNPlano;
-    private Date inicioAulas;
-    private Date fimAulas;
 }

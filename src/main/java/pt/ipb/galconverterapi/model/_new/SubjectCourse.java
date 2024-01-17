@@ -8,6 +8,4 @@ public class SubjectCourse {
     private Course course;
     private Subject subject;
     private Period period;
-
-    private int numAlunos;
 }

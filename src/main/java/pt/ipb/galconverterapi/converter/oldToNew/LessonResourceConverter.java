@@ -30,12 +30,6 @@ public class LessonResourceConverter {
             lessonResource.setId((long)recursoDisciplina.getId());
             lessonResource.setQuantity(recursoDisciplina.getQuantidade());
 
-            lessonResource.setIdCurso(recursoDisciplina.getIdCurso());
-            lessonResource.setIdAno(recursoDisciplina.getIdAno());
-            lessonResource.setIdDiscip(recursoDisciplina.getIdDiscip());
-            lessonResource.setIdTipoAula(recursoDisciplina.getIdTipoAula());
-            lessonResource.setValorExacto(recursoDisciplina.getValorExacto());
-
             lessonResource.setResource(resources.stream()
                     .filter(resource -> resource.getId().equals((long)recursoDisciplina.getIdRec()))
                     .findFirst()

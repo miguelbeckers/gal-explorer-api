@@ -23,13 +23,6 @@ public class SubjectConverter {
             subject.setId((long) disciplina.getId());
             subject.setName(disciplina.getNome());
             subject.setCode(disciplina.getAbrev());
-
-            subject.setIdDepart(disciplina.getIdDepart());
-            subject.setIpbCodEscola(disciplina.getIpbCodEscola());
-            subject.setIpbCodCurso(disciplina.getIpbCodCurso());
-            subject.setIpbNPlano(disciplina.getIpbNPlano());
-            subject.setIpbNDisciplina(disciplina.getIpbNDisciplina());
-            subject.setIpbNOpcao(disciplina.getIpbNOpcao());
             subjects.add(subject);
         }
 

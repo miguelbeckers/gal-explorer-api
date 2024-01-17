@@ -7,7 +7,4 @@ public class SubjectType {
     private Long id;
     private String name;
     private String abbreviation;
-
-    private String cor;
-    private int prioridade;
 }

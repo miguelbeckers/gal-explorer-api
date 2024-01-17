@@ -14,7 +14,6 @@ public class Lesson {
     private SubjectType subjectType;
     private List<LessonResource> lessonResources = new ArrayList<>();
     private List<LessonStudent> lessonStudents = new ArrayList<>();
-
     private Timeslot timeslot;
     private Classroom classroom;
 }

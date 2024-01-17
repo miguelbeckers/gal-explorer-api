@@ -41,8 +41,6 @@ public class SubjectCourseConverter {
             SubjectCourse subjectCourse = new SubjectCourse();
             subjectCourse.setId((long) disciplinaCurso.getId());
 
-            subjectCourse.setNumAlunos(disciplinaCurso.getNumAlunos());
-
             subjectCourse.setCourse(courses.stream()
                     .filter(course -> course.getId() == disciplinaCurso.getIdCurso())
                     .findFirst()

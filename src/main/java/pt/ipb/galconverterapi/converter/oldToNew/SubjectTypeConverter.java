@@ -23,9 +23,6 @@ public class SubjectTypeConverter {
             subjectType.setId((long) tipoAula.getId());
             subjectType.setName(tipoAula.getNome());
             subjectType.setAbbreviation(tipoAula.getAbrev());
-
-            subjectType.setCor(tipoAula.getCor());
-            subjectType.setPrioridade(tipoAula.getPrioridade());
             subjectTypes.add(subjectType);
         }
 
