@@ -41,27 +41,32 @@ public class SubjectCourseConverter {
             SubjectCourse subjectCourse = new SubjectCourse();
             subjectCourse.setId((long) disciplinaCurso.getId());
 
-            subjectCourse.setCourse(courses.stream()
+            Course subjectCourseCourse = courses.stream()
                     .filter(course -> course.getId() == disciplinaCurso.getIdCurso())
                     .findFirst()
                     .orElseThrow(
                             () -> new RuntimeException("Course not found for id: " + disciplinaCurso.getIdCurso())
-                    ));
+                    );
 
-            subjectCourse.setSubject(subjects.stream()
+            subjectCourse.setCourse(subjectCourse.getId());
+
+            Subject subjectCourseSubject = subjects.stream()
                     .filter(subject -> subject.getId() == disciplinaCurso.getIdDiscip())
                     .findFirst()
                     .orElseThrow(
                             () -> new RuntimeException("Subject not found for id: " + disciplinaCurso.getIdDiscip())
-                    ));
+                    );
 
-            subjectCourse.setPeriod(periods.stream()
+            subjectCourse.setSubject(subjectCourseSubject.getId());
+
+            Period subjectCoursePeriod = periods.stream()
                     .filter(period -> period.getId() == disciplinaCurso.getIdAno())
                     .findFirst()
                     .orElseThrow(
                             () -> new RuntimeException("Period not found for id: " + disciplinaCurso.getIdAno())
-                    ));
+                    );
 
+            subjectCourse.setPeriod(subjectCoursePeriod.getId());
             subjectCourses.add(subjectCourse);
         }
 

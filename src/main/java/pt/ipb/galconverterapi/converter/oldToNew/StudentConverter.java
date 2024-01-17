@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Student;
 import pt.ipb.galconverterapi.model._new.SubjectCourse;
 import pt.ipb.galconverterapi.model.old.AlunoDisciplina;
+import pt.ipb.galconverterapi.model.old.DisciplinaCurso;
 import pt.ipb.galconverterapi.repository._new.SubjectCourseRepository;
 import pt.ipb.galconverterapi.repository.old.AlunoDisciplinaRepository;
+import pt.ipb.galconverterapi.repository.old.DisciplinaCursoRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,11 +21,11 @@ public class StudentConverter {
     private AlunoDisciplinaRepository alunoDisciplinaRepository;
 
     @Autowired
-    private SubjectCourseRepository subjectCourseRepository;
+    private DisciplinaCursoRepository disciplinaCursoRepository;
 
     public List<Student> convert() {
         List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
-        List<SubjectCourse> subjectCourses = subjectCourseRepository.findAll();
+        List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
 
         //TODO: check the usage fo HashMap
         Map<Long, Student> studentMap = new HashMap<>();
@@ -39,9 +41,11 @@ public class StudentConverter {
             student.setId(studentId);
 
             //TODO: check if a student can have more than one subject course
-            List<SubjectCourse> studentSubjectCourses = subjectCourses.stream()
-                    .filter(subjectCourse -> subjectCourse.getCourse().getId().equals((long) alunoDisciplina.getIdCurso())
-                            && subjectCourse.getSubject().getId().equals((long) alunoDisciplina.getIdDiscip()))
+            List<Long> studentSubjectCourses = disciplinaCursos.stream()
+                    .filter(disciplinaCurso -> disciplinaCurso.getIdCurso() == alunoDisciplina.getIdCurso()
+                            && disciplinaCurso.getIdDiscip() == alunoDisciplina.getIdDiscip())
+                    .mapToLong(DisciplinaCurso::getId)
+                    .boxed()
                     .toList();
 
             student.setSubjectCourses(studentSubjectCourses);

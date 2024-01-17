@@ -45,13 +45,12 @@ public class ProfessorConverter {
             professor.setName(docente.getNome());
             professor.setAbbreviation(docente.getAbrev());
 
-            professor.setDepartment(departments.stream()
-                    .filter(department -> department.getId().equals((long) docente.getIdDepart()))
+            Department department = departments.stream()
+                    .filter(d -> d.getId().equals((long) docente.getIdDepart()))
                     .findFirst()
-                    .orElseThrow(
-                            () -> new RuntimeException("Department [" + docente.getIdDepart() + "] not found")
-                    )
-            );
+                    .orElseThrow(() -> new RuntimeException("Department [" + docente.getIdDepart() + "] not found"));
+
+            professor.setDepartment(department.getId());
 
             List<Indisponibilidade> indisponibilidadesProfessor = indisponibilidades.stream()
                     .filter(indisponibilidade -> indisponibilidade.getIdTipo() == docente.getId()
@@ -75,7 +74,9 @@ public class ProfessorConverter {
                 professorUnavailability.add(timeslot);
             }
 
-            professor.setUnavailability(professorUnavailability);
+            professor.setUnavailability(professorUnavailability.stream()
+                    .map(Timeslot::getId)
+                    .toList());
             professors.add(professor);
         }
 

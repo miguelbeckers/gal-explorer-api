@@ -20,6 +20,7 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CourseConverter {
@@ -75,7 +76,7 @@ public class CourseConverter {
 
             if (disciplinaCurso != null) {
                 Disciplina disciplina = disciplinaHashMap.get(disciplinaCurso.getIdDiscip());
-                course.setDepartment(departmentHashMap.get((long) disciplina.getIdDepart()));
+                course.setDepartment(departmentHashMap.get((long) disciplina.getIdDepart()).getId());
             } else {
                 course.setDepartment(null);
             }
@@ -102,7 +103,9 @@ public class CourseConverter {
                 courseUnavailability.add(timeslot);
             }
 
-            course.setUnavailability(courseUnavailability);
+            course.setUnavailability(courseUnavailability.stream()
+                    .map(Timeslot::getId)
+                    .toList());
             courses.add(course);
         }
 

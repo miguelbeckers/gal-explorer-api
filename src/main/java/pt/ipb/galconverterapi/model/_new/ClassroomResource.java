@@ -6,5 +6,5 @@ import lombok.Data;
 public class ClassroomResource {
     private Long id;
     private Integer quantity;
-    private Resource resource;
+    private Long resource;
 }

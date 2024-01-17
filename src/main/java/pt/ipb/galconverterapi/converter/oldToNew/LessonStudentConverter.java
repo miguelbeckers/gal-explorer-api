@@ -29,13 +29,14 @@ public class LessonStudentConverter {
             LessonStudent lessonStudent = new LessonStudent();
             lessonStudent.setId((long) alunoDisciplina.getId());
 
-            lessonStudent.setStudent(students.stream()
+            Student lessonStudentStudent = students.stream()
                     .filter(student -> student.getId() == alunoDisciplina.getIdAluno())
                     .findFirst()
                     .orElseThrow(
                             () -> new RuntimeException("Student not found for id: " + alunoDisciplina.getIdAluno())
-                    ));
+                    );
 
+            lessonStudent.setStudent(lessonStudentStudent.getId());
             lessonStudents.add(lessonStudent);
         }
 

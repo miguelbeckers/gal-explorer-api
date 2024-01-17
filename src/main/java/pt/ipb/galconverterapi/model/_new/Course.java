@@ -11,6 +11,6 @@ public class Course {
     private Long id;
     private String name;
     private String abbreviation;
-    private Department department;
-    private List<Timeslot> unavailability = new ArrayList<>();
+    private Long department;
+    private List<Long> unavailability = new ArrayList<>();
 }

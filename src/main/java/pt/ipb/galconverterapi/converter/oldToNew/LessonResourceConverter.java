@@ -30,13 +30,13 @@ public class LessonResourceConverter {
             lessonResource.setId((long)recursoDisciplina.getId());
             lessonResource.setQuantity(recursoDisciplina.getQuantidade());
 
-            lessonResource.setResource(resources.stream()
-                    .filter(resource -> resource.getId().equals((long)recursoDisciplina.getIdRec()))
+            Resource resource = resources.stream()
+                    .filter(r -> r.getId().equals((long)recursoDisciplina.getIdRec()))
                     .findFirst()
-                    .orElseThrow(
-                            () -> new RuntimeException("LessonResource [" + lessonResource.getId() + "] resource not found"))
-            );
+                    .orElseThrow(() -> new RuntimeException(
+                            "Resource id: " + recursoDisciplina.getIdRec() + " not found"));
 
+            lessonResource.setResource(resource.getId());
             lessonResources.add(lessonResource);
         }
 

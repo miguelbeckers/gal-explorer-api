@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class LessonStudent {
     private Long id;
-    private Student student;
+    private Long student;
 }

@@ -71,7 +71,10 @@ public class ClassroomConverter {
                 classroomUnavailability.add(timeslot);
             }
 
-            classroom.setUnavailability(classroomUnavailability);
+            classroom.setUnavailability(classroomUnavailability.stream()
+                    .map(Timeslot::getId)
+                    .toList()
+            );
 
             List<RecursoSala> recursoSalasSala = recursoSalas.stream()
                     .filter(recursoSala -> recursoSala.getIdSala() == sala.getId())
@@ -89,7 +92,9 @@ public class ClassroomConverter {
                 ClassroomClassroomResources.add(classroomResource);
             }
 
-            classroom.setClassroomResources(ClassroomClassroomResources);
+            classroom.setClassroomResources(ClassroomClassroomResources.stream()
+                    .map(ClassroomResource::getId)
+                    .toList());
             classrooms.add(classroom);
         }
 
