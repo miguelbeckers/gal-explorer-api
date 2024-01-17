@@ -3,6 +3,7 @@ package pt.ipb.galconverterapi.repository.old;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pt.ipb.galconverterapi.model._new.DetalhesAulaDto;
 import pt.ipb.galconverterapi.model.old.Horario;
 
 import java.util.List;

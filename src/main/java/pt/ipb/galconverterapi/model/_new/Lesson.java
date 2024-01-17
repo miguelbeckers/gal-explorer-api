@@ -9,7 +9,6 @@ import java.util.List;
 public class Lesson {
     private Long id;
     private String name;
-    private String color;
     private Professor professor;
     private SubjectCourse subjectCourse;
     private SubjectType subjectType;
