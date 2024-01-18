@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface IndisponibilidadeRepository extends JpaRepository<Indisponibilidade, Integer> {
-    @Query(value = "SELECT * FROM indisponibilidade", nativeQuery = true)
+    @Query(value = "select tipo, id_tipo, id_dia, inicio, fim from indisponibilidade", nativeQuery = true)
     List<Object[]> findAllByQueryAsObjects();
 }

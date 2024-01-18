@@ -21,6 +21,10 @@ public class TimeslotConverter {
     @Autowired
     private DiaRepository diaRepository;
 
+    private List<Timeslot> timeslots = new ArrayList<>();
+
+    private Boolean flag = false;
+
     public List<Timeslot> convert() {
         List<Tempo> tempos = tempoRepository.findAll();
         List<Dia> dias = diaRepository.findAll();
@@ -39,19 +43,21 @@ public class TimeslotConverter {
             }
         }
 
+        this.timeslots = timeslots;
+        flag = true;
         return timeslots;
     }
 
     public List<Timeslot> convert(List<Object[]> indisponibilidades) {
-        List<Timeslot> timeslots = convert();
+        if (timeslots.isEmpty() && !flag) {
+            convert();
+        }
 
         List<Timeslot> unavailability = new ArrayList<>();
         for (Object[] indisponibilidade : indisponibilidades) {
-            DayOfWeek dayOfWeek = DayOfWeek.of((int) indisponibilidade[3]);
-            Time startTime = (Time) indisponibilidade[4];
-            Time endTime = (Time) indisponibilidade[5];
-
-            System.out.println("dayOfWeek: " + dayOfWeek + ", startTime: " + startTime + ", endTime: " + endTime);
+            DayOfWeek dayOfWeek = DayOfWeek.of((int) indisponibilidade[2]);
+            Time startTime = (Time) indisponibilidade[3];
+            Time endTime = (Time) indisponibilidade[4];
 
             for (Timeslot timeslot : timeslots) {
                 if (timeslot.getDayOfWeek().equals(dayOfWeek)
