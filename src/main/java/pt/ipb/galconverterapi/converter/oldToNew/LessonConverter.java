@@ -3,14 +3,8 @@ package pt.ipb.galconverterapi.converter.oldToNew;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Lesson;
-import pt.ipb.galconverterapi.model.old.AulaDocente;
-import pt.ipb.galconverterapi.model.old.DetalhesAula;
-import pt.ipb.galconverterapi.model.old.DisciplinaCurso;
-import pt.ipb.galconverterapi.model.old.RecursoDisciplina;
-import pt.ipb.galconverterapi.repository.old.AulaDocenteRepository;
-import pt.ipb.galconverterapi.repository.old.DetalhesAulaRepository;
-import pt.ipb.galconverterapi.repository.old.DisciplinaCursoRepository;
-import pt.ipb.galconverterapi.repository.old.RecursoDisciplinaRepository;
+import pt.ipb.galconverterapi.model.old.*;
+import pt.ipb.galconverterapi.repository.old.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +23,15 @@ public class LessonConverter {
     @Autowired
     private RecursoDisciplinaRepository recursoDisciplinaRepository;
 
+    @Autowired
+    private AlunoDisciplinaRepository alunoDisciplinaRepository;
+
     public List<Lesson> convert() {
         List<DetalhesAula> detalhesAulas = detalhesAulaRepository.findAll();
         List<AulaDocente> aulaDocentes = aulaDocenteRepository.findAll();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
         List<RecursoDisciplina> recursoDisciplinas = recursoDisciplinaRepository.findAll();
+        List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
 
         List<Lesson> lessons = new ArrayList<>();
         for (DetalhesAula detalhesAula : detalhesAulas) {
@@ -57,7 +55,11 @@ public class LessonConverter {
                             .map(recursoDisciplina -> (long) recursoDisciplina.getId())
                             .toList());
 
-                    //TODO: insert lesson students
+//                    lesson.setLessonStudents(alunoDisciplinas.stream()
+//                            .filter(alunoDisciplina -> alunoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip())
+//                            .map(alunoDisciplina -> (long) alunoDisciplina.getId())
+//                            .toList());
+
                     lessons.add(lesson);
                 }
             }
