@@ -5,15 +5,13 @@ import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Classroom;
 import pt.ipb.galconverterapi.model._new.ClassroomResource;
 import pt.ipb.galconverterapi.model._new.Timeslot;
-import pt.ipb.galconverterapi.model.old.*;
+import pt.ipb.galconverterapi.model.old.RecursoSala;
+import pt.ipb.galconverterapi.model.old.Sala;
 import pt.ipb.galconverterapi.repository._new.ClassroomResourceRepository;
-import pt.ipb.galconverterapi.repository._new.TimeslotRepository;
-import pt.ipb.galconverterapi.repository.old.HorarioRepository;
 import pt.ipb.galconverterapi.repository.old.IndisponibilidadeRepository;
 import pt.ipb.galconverterapi.repository.old.RecursoSalaRepository;
 import pt.ipb.galconverterapi.repository.old.SalaRepository;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,24 +21,22 @@ public class ClassroomConverter {
     private SalaRepository salaRepository;
 
     @Autowired
-    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
     private RecursoSalaRepository recursoSalaRepository;
-
-    @Autowired
-    private TimeslotRepository timeslotRepository;
 
     @Autowired
     private ClassroomResourceRepository classroomResourceRepository;
 
+    @Autowired
+    private IndisponibilidadeRepository indisponibilidadeRepository;
+
+    @Autowired
+    private TimeslotConverter timeslotConverter;
+
     public List<Classroom> convert() {
         List<Sala> salas = salaRepository.findAll();
-
-        List<Indisponibilidade> indisponibilidades = indisponibilidadeRepository.findAll();
         List<RecursoSala> recursoSalas = recursoSalaRepository.findAll();
 
-        List<Timeslot> timeslots = timeslotRepository.findAll();
+        List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
         List<ClassroomResource> classroomResources = classroomResourceRepository.findAll();
 
         List<Classroom> classrooms = new ArrayList<>();
@@ -50,31 +46,22 @@ public class ClassroomConverter {
             classroom.setName(sala.getNome());
             classroom.setAbbreviation(sala.getAbrev());
 
-            List<Indisponibilidade> indisponibilidadesSala = indisponibilidades.stream()
-                    .filter(indisponibilidade -> indisponibilidade.getIdTipo() == sala.getId()
-                            && indisponibilidade.getTipo().equals("S"))
-                    .toList();
+            List<Object[]> indisponibilidadesSala = new ArrayList<>();
 
-            List<Timeslot> classroomUnavailability = new ArrayList<>();
-            for (Indisponibilidade indisponibilidade : indisponibilidadesSala) {
-                Timeslot timeslot = timeslots.stream()
-                        .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(indisponibilidade.getIdDia())))
-                        .filter(t -> t.getStartTime().equals(indisponibilidade.getInicio().toLocalTime()))
-                        .filter(t -> t.getEndTime().equals(indisponibilidade.getFim().toLocalTime()))
-                        .findFirst()
-                        .orElseThrow(
-                                () -> new RuntimeException("Timeslot [" + indisponibilidade.getIdDia() +
-                                        ", " + indisponibilidade.getInicio() +
-                                        ", " + indisponibilidade.getFim() + "] not found")
-                        );
+            for (Object[] indisponibilidade : indisponibilidades) {
+                String tipo = (String) indisponibilidade[0];
+                int idTipo = (int) indisponibilidade[1];
 
-                classroomUnavailability.add(timeslot);
+                if (tipo.equals("S") && idTipo == sala.getId()) {
+                    indisponibilidadesSala.add(indisponibilidade);
+                }
             }
 
-            classroom.setUnavailability(classroomUnavailability.stream()
+            List<Timeslot> professorUnavailability = timeslotConverter.convert(indisponibilidadesSala);
+
+            classroom.setUnavailability(professorUnavailability.stream()
                     .map(Timeslot::getId)
-                    .toList()
-            );
+                    .toList());
 
             List<RecursoSala> recursoSalasSala = recursoSalas.stream()
                     .filter(recursoSala -> recursoSala.getIdSala() == sala.getId())
@@ -83,7 +70,7 @@ public class ClassroomConverter {
             List<ClassroomResource> ClassroomClassroomResources = new ArrayList<>();
             for (RecursoSala recursoSala : recursoSalasSala) {
                 ClassroomResource classroomResource = classroomResources.stream()
-                        .filter(r -> r.getId().equals((long)recursoSala.getId()))
+                        .filter(r -> r.getId().equals((long) recursoSala.getId()))
                         .findFirst()
                         .orElseThrow(
                                 () -> new RuntimeException("ClassroomResource [" + recursoSala.getId() + "] not found")
@@ -95,6 +82,7 @@ public class ClassroomConverter {
             classroom.setClassroomResources(ClassroomClassroomResources.stream()
                     .map(ClassroomResource::getId)
                     .toList());
+
             classrooms.add(classroom);
         }
 

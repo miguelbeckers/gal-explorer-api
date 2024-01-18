@@ -8,19 +8,15 @@ import pt.ipb.galconverterapi.model._new.Timeslot;
 import pt.ipb.galconverterapi.model.old.Curso;
 import pt.ipb.galconverterapi.model.old.Disciplina;
 import pt.ipb.galconverterapi.model.old.DisciplinaCurso;
-import pt.ipb.galconverterapi.model.old.Indisponibilidade;
 import pt.ipb.galconverterapi.repository._new.DepartmentRepository;
-import pt.ipb.galconverterapi.repository._new.TimeslotRepository;
 import pt.ipb.galconverterapi.repository.old.CursoRepository;
 import pt.ipb.galconverterapi.repository.old.DisciplinaCursoRepository;
 import pt.ipb.galconverterapi.repository.old.DisciplinaRepository;
 import pt.ipb.galconverterapi.repository.old.IndisponibilidadeRepository;
 
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CourseConverter {
@@ -34,21 +30,19 @@ public class CourseConverter {
     private DisciplinaRepository disciplinaRepository;
 
     @Autowired
-    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    private TimeslotRepository timeslotRepository;
+    private IndisponibilidadeRepository indisponibilidadeRepository;
+
+    @Autowired
+    private TimeslotConverter timeslotConverter;
 
     public List<Course> convert() {
         List<Curso> cursos = cursoRepository.findAll();
         List<Course> courses = new ArrayList<>();
 
-        List<Indisponibilidade> indisponibilidades = indisponibilidadeRepository.findAll();
-        List<Timeslot> timeslots = timeslotRepository.findAll();
-
+        List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
 
         List<Disciplina> disciplinas = disciplinaRepository.findAll();
@@ -81,31 +75,23 @@ public class CourseConverter {
                 course.setDepartment(null);
             }
 
-            List<Indisponibilidade> indisponibilidadesProfessor = indisponibilidades.stream()
-                    .filter(indisponibilidade -> indisponibilidade.getIdTipo() == curso.getId()
-                            && indisponibilidade.getTipo().equals("C"))
-                    .toList();
+            List<Object[]> indisponibilidadesCurso = new ArrayList<>();
 
-            //TODO: implement UnavailabilityConverter
-            List<Timeslot> courseUnavailability = new ArrayList<>();
-            for (Indisponibilidade indisponibilidade : indisponibilidadesProfessor) {
-                Timeslot timeslot = timeslots.stream()
-                        .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(indisponibilidade.getIdDia())))
-                        .filter(t -> t.getStartTime().equals(indisponibilidade.getInicio().toLocalTime()))
-                        .filter(t -> t.getEndTime().equals(indisponibilidade.getFim().toLocalTime()))
-                        .findFirst()
-                        .orElseThrow(
-                                () -> new RuntimeException("Timeslot [" + indisponibilidade.getIdDia() +
-                                        ", " + indisponibilidade.getInicio() +
-                                        ", " + indisponibilidade.getFim() + "] not found")
-                        );
+            for (Object[] indisponibilidade : indisponibilidades) {
+                String tipo = (String) indisponibilidade[0];
+                int idTipo = (int) indisponibilidade[1];
 
-                courseUnavailability.add(timeslot);
+                if (tipo.equals("C") && idTipo == curso.getId()) {
+                    indisponibilidadesCurso.add(indisponibilidade);
+                }
             }
+
+            List<Timeslot> courseUnavailability = timeslotConverter.convert(indisponibilidadesCurso);
 
             course.setUnavailability(courseUnavailability.stream()
                     .map(Timeslot::getId)
                     .toList());
+
             courses.add(course);
         }
 
