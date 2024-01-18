@@ -19,8 +19,6 @@ public class Sala {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    //FIXME: recepção doesn't have id!
     @Column(name = "id_tipo")
     private int idTipo;
     @Column(name = "nome")
