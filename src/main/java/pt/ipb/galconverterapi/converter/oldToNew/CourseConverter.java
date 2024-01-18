@@ -3,12 +3,10 @@ package pt.ipb.galconverterapi.converter.oldToNew;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.model._new.Course;
-import pt.ipb.galconverterapi.model._new.Department;
 import pt.ipb.galconverterapi.model._new.Timeslot;
 import pt.ipb.galconverterapi.model.old.Curso;
 import pt.ipb.galconverterapi.model.old.Disciplina;
 import pt.ipb.galconverterapi.model.old.DisciplinaCurso;
-import pt.ipb.galconverterapi.repository._new.DepartmentRepository;
 import pt.ipb.galconverterapi.repository.old.CursoRepository;
 import pt.ipb.galconverterapi.repository.old.DisciplinaCursoRepository;
 import pt.ipb.galconverterapi.repository.old.DisciplinaRepository;
@@ -30,9 +28,6 @@ public class CourseConverter {
     private DisciplinaRepository disciplinaRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
-
-    @Autowired
     private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
@@ -51,12 +46,6 @@ public class CourseConverter {
             disciplinaHashMap.put(disciplina.getId(), disciplina);
         }
 
-        List<Department> departments = departmentRepository.findAll();
-        HashMap<Long, Department> departmentHashMap = new HashMap<>();
-        for (Department department : departments) {
-            departmentHashMap.put(department.getId(), department);
-        }
-
         for (Curso curso : cursos) {
             Course course = new Course();
             course.setId((long) curso.getId());
@@ -70,9 +59,7 @@ public class CourseConverter {
 
             if (disciplinaCurso != null) {
                 Disciplina disciplina = disciplinaHashMap.get(disciplinaCurso.getIdDiscip());
-                course.setDepartment(departmentHashMap.get((long) disciplina.getIdDepart()).getId());
-            } else {
-                course.setDepartment(null);
+                course.setDepartment((long) disciplina.getIdDepart());
             }
 
             List<Object[]> indisponibilidadesCurso = new ArrayList<>();
@@ -87,10 +74,7 @@ public class CourseConverter {
             }
 
             List<Timeslot> courseUnavailability = timeslotConverter.convert(indisponibilidadesCurso);
-
-            course.setUnavailability(courseUnavailability.stream()
-                    .map(Timeslot::getId)
-                    .toList());
+            course.setUnavailability(courseUnavailability.stream().map(Timeslot::getId).toList());
 
             courses.add(course);
         }

@@ -2,11 +2,9 @@ package pt.ipb.galconverterapi.converter.oldToNew;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pt.ipb.galconverterapi.model._new.Department;
 import pt.ipb.galconverterapi.model._new.Professor;
 import pt.ipb.galconverterapi.model._new.Timeslot;
 import pt.ipb.galconverterapi.model.old.Docente;
-import pt.ipb.galconverterapi.repository._new.DepartmentRepository;
 import pt.ipb.galconverterapi.repository.old.DocenteRepository;
 import pt.ipb.galconverterapi.repository.old.IndisponibilidadeRepository;
 
@@ -19,17 +17,13 @@ public class ProfessorConverter {
     private DocenteRepository docenteRepository;
 
     @Autowired
-    private TimeslotConverter timeslotConverter;
-
-    @Autowired
     private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private TimeslotConverter timeslotConverter;
 
     public List<Professor> convert() {
         List<Docente> docentes = docenteRepository.findAll();
-        List<Department> departments = departmentRepository.findAll();
         List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
 
         List<Professor> professors = new ArrayList<>();
@@ -38,13 +32,7 @@ public class ProfessorConverter {
             professor.setId((long) docente.getId());
             professor.setName(docente.getNome());
             professor.setAbbreviation(docente.getAbrev());
-
-            Department department = departments.stream()
-                    .filter(d -> d.getId().equals((long) docente.getIdDepart()))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Department [" + docente.getIdDepart() + "] not found"));
-
-            professor.setDepartment(department.getId());
+            professor.setDepartment((long) docente.getIdDepart());
 
             List<Object[]> indisponibilidadesProfessor = new ArrayList<>();
 
@@ -58,10 +46,7 @@ public class ProfessorConverter {
             }
 
             List<Timeslot> professorUnavailability = timeslotConverter.convert(indisponibilidadesProfessor);
-
-            professor.setUnavailability(professorUnavailability.stream()
-                    .map(Timeslot::getId)
-                    .toList());
+            professor.setUnavailability(professorUnavailability.stream().map(Timeslot::getId).toList());
 
             professors.add(professor);
         }

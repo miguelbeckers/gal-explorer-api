@@ -18,7 +18,7 @@ public class SubjectConverter {
         List<Disciplina> disciplinas = disciplinaRepository.findAll();
         List<Subject> subjects = new ArrayList<>();
 
-        for(Disciplina disciplina : disciplinas) {
+        for (Disciplina disciplina : disciplinas) {
             Subject subject = new Subject();
             subject.setId((long) disciplina.getId());
             subject.setName(disciplina.getNome());

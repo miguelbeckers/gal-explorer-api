@@ -23,7 +23,7 @@ public class TimeslotConverter {
 
     private List<Timeslot> timeslots = new ArrayList<>();
 
-    private Boolean flag = false;
+    private Boolean converted = false;
 
     public List<Timeslot> convert() {
         List<Tempo> tempos = tempoRepository.findAll();
@@ -38,22 +38,20 @@ public class TimeslotConverter {
                 timeslot.setDayOfWeek(DayOfWeek.of(dia.getWeekday()));
                 timeslot.setStartTime(tempo.getInicio().toLocalTime());
                 timeslot.setEndTime(tempo.getFim().toLocalTime());
-
                 timeslots.add(timeslot);
             }
         }
 
         this.timeslots = timeslots;
-        flag = true;
+        converted = true;
+
         return timeslots;
     }
 
     public List<Timeslot> convert(List<Object[]> indisponibilidades) {
-        if (timeslots.isEmpty() && !flag) {
-            convert();
-        }
-
+        if (!converted) convert();
         List<Timeslot> unavailability = new ArrayList<>();
+
         for (Object[] indisponibilidade : indisponibilidades) {
             DayOfWeek dayOfWeek = DayOfWeek.of((int) indisponibilidade[2]);
             Time startTime = (Time) indisponibilidade[3];

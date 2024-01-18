@@ -19,7 +19,7 @@ public class PeriodConverter {
         List<Ano> anos = anoRepository.findAll();
         List<Period> periods = new ArrayList<>();
 
-        for(Ano ano : anos) {
+        for (Ano ano : anos) {
             Period period = new Period();
             period.setId((long) ano.getId());
             period.setName(ano.getNome());

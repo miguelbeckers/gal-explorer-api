@@ -25,7 +25,7 @@ public class StudentConverter {
 //        return getStudentsWithSubjectCourses();
     }
 
-    public List<Student> getStudentsWithoutSubjectCourses(){
+    public List<Student> getStudentsWithoutSubjectCourses() {
         List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
 
         HashMap<Long, Student> studentMap = new HashMap<>();
@@ -44,7 +44,7 @@ public class StudentConverter {
         return new ArrayList<>(studentMap.values());
     }
 
-    private List<Student> getStudentsWithSubjectCourses(){
+    private List<Student> getStudentsWithSubjectCourses() {
         List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
 
