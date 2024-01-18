@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.model.old;
+package pt.ipb.galconverterapi.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,14 +15,16 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "marcacao_exame", schema = "2022_2023_1_horarios")
-public class MarcacaoExame {
+@Table(name = "indisp_curso_exame", schema = "2022_2023_1_horarios")
+public class IndispCursoExame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
-    @Column(name = "id_exame")
-    private int idExame;
+    @Column(name = "id_ano")
+    private int idAno;
+    @Column(name = "id_curso")
+    private int idCurso;
     @Column(name = "dia")
     private Date dia;
     @Column(name = "inicio")
@@ -34,7 +36,7 @@ public class MarcacaoExame {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MarcacaoExame that = (MarcacaoExame) o;
+        IndispCursoExame that = (IndispCursoExame) o;
         return id == that.id;
     }
 

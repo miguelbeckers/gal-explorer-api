@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.model.old;
+package pt.ipb.galconverterapi.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.Objects;
 
 @Getter
@@ -15,24 +13,26 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "indisp_escola_exame", schema = "2022_2023_1_horarios")
-public class IndispEscolaExame {
+@Table(name = "recurso_exame", schema = "2022_2023_1_horarios")
+public class RecursoExame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
-    @Column(name = "dia")
-    private Date dia;
-    @Column(name = "inicio")
-    private Time inicio;
-    @Column(name = "fim")
-    private Time fim;
+    @Column(name = "id_rec")
+    private int idRec;
+    @Column(name = "id_exame")
+    private int idExame;
+    @Column(name = "quantidade")
+    private double quantidade;
+    @Column(name = "valor_exacto")
+    private String valorExacto;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IndispEscolaExame that = (IndispEscolaExame) o;
+        RecursoExame that = (RecursoExame) o;
         return id == that.id;
     }
 
