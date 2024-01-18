@@ -4,54 +4,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import pt.ipb.galconverterapi.repository._new.*;
+import pt.ipb.galconverterapi.converter.*;
 
 @Component
 public class DataLoader implements ApplicationRunner {
     @Autowired
-    private SubjectRepository subjectRepository;
+    private SubjectConverter subjectConverter;
 
     @Autowired
-    private PeriodRepository periodRepository;
+    private PeriodConverter periodConverter;
 
     @Autowired
-    private ResourceRepository resourceRepository;
+    private ResourceConverter resourceConverter;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private DepartmentConverter departmentConverter;
 
     @Autowired
-    private SubjectTypeRepository subjectTypeRepository;
+    private SubjectTypeConverter subjectTypeConverter;
 
     @Autowired
-    private TimeslotRepository timeslotRepository;
+    private TimeslotConverter timeslotConverter;
 
     @Autowired
-    private ProfessorRepository professorRepository;
+    private ProfessorConverter professorConverter;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseConverter courseConverter;
 
     @Autowired
-    private ClassroomResourceRepository classroomResourceRepository;
+    private ClassroomResourceConverter classroomResourceConverter;
 
     @Autowired
-    private ClassroomRepository classroomRepository;
+    private ClassroomConverter classroomConverter;
 
     @Autowired
-    private LessonResourceRepository lessonResourceRepository;
+    private LessonResourceConverter lessonResourceConverter;
 
     @Autowired
-    private SubjectCourseRepository subjectCourseRepository;
+    private SubjectCourseConverter subjectCourseConverter;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentConverter studentConverter;
 
     @Autowired
-    private LessonStudentRepository lessonStudentRepository;
+    private LessonStudentConverter lessonStudentConverter;
 
     @Autowired
-    private LessonRepository lessonRepository;
+    private LessonConverter lessonConverter;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -60,25 +60,25 @@ public class DataLoader implements ApplicationRunner {
 
     public void load() {
         try {
-            subjectRepository.load();
-            periodRepository.load();
-            resourceRepository.load();
-            departmentRepository.load();
-            subjectTypeRepository.load();
-            timeslotRepository.load();
-            professorRepository.load();
-            courseRepository.load();
-            classroomResourceRepository.load();
-            classroomRepository.load();
-            lessonResourceRepository.load();
-            subjectCourseRepository.load();
-            studentRepository.load();
-            lessonStudentRepository.load();
-            lessonRepository.load();
+            subjectConverter.convert();
+            periodConverter.convert();
+            resourceConverter.convert();
+            departmentConverter.convert();
+            subjectTypeConverter.convert();
+            timeslotConverter.convert();
+            professorConverter.convert();
+            courseConverter.convert();
+            classroomResourceConverter.convert();
+            classroomConverter.convert();
+            lessonResourceConverter.convert();
+            subjectCourseConverter.convert();
+            studentConverter.convert();
+            lessonStudentConverter.convert();
+            lessonConverter.convert();
 
-            System.out.println("Data successfully loaded!");
+            System.out.println("Data successfully converted!");
         } catch (Exception e) {
-            System.out.println("Error loading data");
+            System.out.println("Error converting data");
             System.out.println(e.getMessage());
         }
     }

@@ -5,59 +5,57 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.oldToNew.*;
-import pt.ipb.galconverterapi.repository._new.*;
+import pt.ipb.galconverterapi.converter.*;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/get")
 public class GetterController {
     @Autowired
-    private SubjectRepository subjectRepository;
+    private SubjectConverter subjectConverter;
 
     @Autowired
-    private PeriodRepository periodRepository;
+    private PeriodConverter periodConverter;
 
     @Autowired
-    private ResourceRepository resourceRepository;
+    private ResourceConverter resourceConverter;
 
     @Autowired
-    private DepartmentRepository departmentRepository;
+    private DepartmentConverter departmentConverter;
 
     @Autowired
-    private SubjectTypeRepository subjectTypeRepository;
+    private SubjectTypeConverter subjectTypeConverter;
 
     @Autowired
-    private TimeslotRepository timeslotRepository;
+    private TimeslotConverter timeslotConverter;
 
     @Autowired
-    private ProfessorRepository professorRepository;
+    private ProfessorConverter professorConverter;
 
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseConverter courseConverter;
 
     @Autowired
-    private ClassroomResourceRepository classroomResourceRepository;
+    private ClassroomResourceConverter classroomResourceConverter;
 
     @Autowired
-    private ClassroomRepository classroomRepository;
+    private ClassroomConverter classroomConverter;
 
     @Autowired
-    private LessonResourceRepository lessonResourceRepository;
+    private LessonResourceConverter lessonResourceConverter;
 
     @Autowired
-    private SubjectCourseRepository subjectCourseRepository;
+    private SubjectCourseConverter subjectCourseConverter;
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentConverter studentConverter;
 
     @Autowired
-    private LessonStudentRepository lessonStudentRepository;
+    private LessonStudentConverter lessonStudentConverter;
 
     @Autowired
-    private LessonRepository lessonRepository;
+    private LessonConverter lessonConverter;
 
 
     @GetMapping("/hello")
@@ -67,86 +65,86 @@ public class GetterController {
 
     @GetMapping("/subjects")
     public ResponseEntity<Object> getSubjects() {
-        return ResponseEntity.ok().body(subjectRepository.findAll());
+        return ResponseEntity.ok().body(subjectConverter.convert());
     }
 
     @GetMapping("/periods")
     public ResponseEntity<Object> getPeriods() {
-        return ResponseEntity.ok().body(periodRepository.findAll());
+        return ResponseEntity.ok().body(periodConverter.convert());
     }
 
     @GetMapping("/resources")
     public ResponseEntity<Object> getResources() {
-        return ResponseEntity.ok().body(resourceRepository.findAll());
+        return ResponseEntity.ok().body(resourceConverter.convert());
     }
 
     @GetMapping("/departments")
     public ResponseEntity<Object> getDepartments() {
-        return ResponseEntity.ok().body(departmentRepository.findAll());
+        return ResponseEntity.ok().body(departmentConverter.convert());
     }
 
     @GetMapping("/subjectTypes")
     public ResponseEntity<Object> getSubjectTypes() {
-        return ResponseEntity.ok().body(subjectTypeRepository.findAll());
+        return ResponseEntity.ok().body(subjectTypeConverter.convert());
     }
 
     @GetMapping("/timeslots")
     public ResponseEntity<Object> getTimeslots() {
-        return ResponseEntity.ok().body(timeslotRepository.findAll());
+        return ResponseEntity.ok().body(timeslotConverter.convert());
     }
 
     @GetMapping("/professors")
     public ResponseEntity<Object> getProfessors() {
-        return ResponseEntity.ok().body(professorRepository.findAll());
+        return ResponseEntity.ok().body(professorConverter.convert());
     }
 
-    @GetMapping("/professors/{id}")
-    public ResponseEntity<Object> getProfessorById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(professorRepository.findById(id));
-    }
+//    @GetMapping("/professors/{id}")
+//    public ResponseEntity<Object> getProfessorById(@PathVariable("id") Long id) {
+//        return ResponseEntity.ok().body(professorConverter.findById(id));
+//    }
 
     @GetMapping("/courses")
     public ResponseEntity<Object> getCourses() {
-        return ResponseEntity.ok().body(courseRepository.findAll());
+        return ResponseEntity.ok().body(courseConverter.convert());
     }
 
     @GetMapping("/classroom-resources")
     public ResponseEntity<Object> getClassroomResources() {
-        return ResponseEntity.ok().body(classroomResourceRepository.findAll());
+        return ResponseEntity.ok().body(classroomResourceConverter.convert());
     }
 
     @GetMapping("/classrooms")
     public ResponseEntity<Object> getClassrooms() {
-        return ResponseEntity.ok().body(classroomRepository.findAll());
+        return ResponseEntity.ok().body(classroomConverter.convert());
     }
 
     @GetMapping("/lesson-resources")
     public ResponseEntity<Object> getLessonResources() {
-        return ResponseEntity.ok().body(lessonResourceRepository.findAll());
+        return ResponseEntity.ok().body(lessonResourceConverter.convert());
     }
 
     @GetMapping("/subject-courses")
     public ResponseEntity<Object> getSubjectCourses() {
-        return ResponseEntity.ok().body(subjectCourseRepository.findAll());
+        return ResponseEntity.ok().body(subjectCourseConverter.convert());
     }
 
     @GetMapping("/students")
     public ResponseEntity<Object> getStudents() {
-        return ResponseEntity.ok().body(studentRepository.findAll());
+        return ResponseEntity.ok().body(studentConverter.convert());
     }
 
-    @GetMapping("/students/{id}")
-    public ResponseEntity<Object> getStudentById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok().body(studentRepository.findById(id));
-    }
+//    @GetMapping("/students/{id}")
+//    public ResponseEntity<Object> getStudentById(@PathVariable("id") Long id) {
+//        return ResponseEntity.ok().body(studentConverter.findById(id));
+//    }
 
     @GetMapping("/lesson-students")
     public ResponseEntity<Object> getLessonStudents() {
-        return ResponseEntity.ok().body(lessonStudentRepository.findAll());
+        return ResponseEntity.ok().body(lessonStudentConverter.convert());
     }
 
     @GetMapping("/lessons")
     public ResponseEntity<Object> getLessons() {
-        return ResponseEntity.ok().body(lessonRepository.findAll());
+        return ResponseEntity.ok().body(lessonConverter.convert());
     }
 }
