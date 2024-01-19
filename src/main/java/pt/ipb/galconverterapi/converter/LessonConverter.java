@@ -40,7 +40,7 @@ public class LessonConverter {
                         && detalhesAula.getIdCurso() == disciplinaCurso.getIdCurso()
                         && detalhesAula.getIdAno() == disciplinaCurso.getIdAno()) {
                     LessonDto lessonDto = new LessonDto();
-                    lessonDto.setId((long) detalhesAula.getId());
+                    lessonDto.setId((long) detalhesAula.getIdAula());
                     lessonDto.setName(detalhesAula.getTurma());
                     lessonDto.setSubjectCourse((long) disciplinaCurso.getId());
                     lessonDto.setSubjectType((long) detalhesAula.getIdTipoAula());
