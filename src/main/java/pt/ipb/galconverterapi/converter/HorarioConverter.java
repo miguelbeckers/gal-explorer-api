@@ -70,8 +70,6 @@ public class HorarioConverter {
         }
 
         horarioRepository.deleteAll();
-        horarioRepository.saveAll(horarios);
-
-        return horarios;
+        return horarioRepository.saveAll(horarios);
     }
 }
