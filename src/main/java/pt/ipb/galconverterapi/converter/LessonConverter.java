@@ -26,12 +26,16 @@ public class LessonConverter {
     @Autowired
     private AlunoDisciplinaRepository alunoDisciplinaRepository;
 
+    @Autowired
+    private TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository;
+
     public List<LessonDto> convert() {
         List<DetalhesAula> detalhesAulas = detalhesAulaRepository.findAll();
         List<AulaDocente> aulaDocentes = aulaDocenteRepository.findAll();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
         List<RecursoDisciplina> recursoDisciplinas = recursoDisciplinaRepository.findAll();
         List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
+        List<TipoAulaDisciplina> tipoAulaDisciplinas = tipoAulaDisciplinaRepository.findAll();
 
         List<LessonDto> lessonDtos = new ArrayList<>();
         for (DetalhesAula detalhesAula : detalhesAulas) {
@@ -59,6 +63,17 @@ public class LessonConverter {
 //                            .filter(alunoDisciplina -> alunoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip())
 //                            .map(alunoDisciplina -> (long) alunoDisciplina.getIdAluno())
 //                            .toList());
+
+                    lessonDto.setHoursPerWeek(tipoAulaDisciplinas.stream()
+                            .filter(tad -> tad.getIdDiscip() == detalhesAula.getIdDiscip()
+                                    && tad.getIdTipoAula() == detalhesAula.getIdTipoAula())
+                            .findFirst()
+                            .map(TipoAulaDisciplina::getHorasSemanais)
+                            .orElseThrow(() -> new RuntimeException(
+                                    "TipoAulaDisciplina not found for detalhesAula: " + detalhesAula.getId()
+                                            + " with idDiscip: " + detalhesAula.getIdDiscip()
+                                            + " idTipoAula: " + detalhesAula.getIdTipoAula()
+                            )));
 
                     lessonDtos.add(lessonDto);
                 }

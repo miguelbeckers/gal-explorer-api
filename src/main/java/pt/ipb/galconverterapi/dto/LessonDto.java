@@ -10,6 +10,7 @@ import java.util.List;
 public class LessonDto {
     private Long id;
     private String name;
+    private Double hoursPerWeek;
     private List<Long> professors;
     private Long subjectCourse;
     private Long subjectType;
