@@ -14,7 +14,7 @@ public class LessonDto {
     private Long subjectCourse;
     private Long subjectType;
     private List<Long> lessonResources = new ArrayList<>();
-    private List<Long> lessonStudents = new ArrayList<>();
+    private List<Long> students = new ArrayList<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long timeslot;

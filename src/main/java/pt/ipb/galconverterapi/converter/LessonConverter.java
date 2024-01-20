@@ -55,9 +55,9 @@ public class LessonConverter {
                             .map(recursoDisciplina -> (long) recursoDisciplina.getId())
                             .toList());
 
-//                    lesson.setLessonStudents(alunoDisciplinas.stream()
+//                    lessonDto.setStudents(alunoDisciplinas.stream()
 //                            .filter(alunoDisciplina -> alunoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip())
-//                            .map(alunoDisciplina -> (long) alunoDisciplina.getId())
+//                            .map(alunoDisciplina -> (long) alunoDisciplina.getIdAluno())
 //                            .toList());
 
                     lessonDtos.add(lessonDto);
