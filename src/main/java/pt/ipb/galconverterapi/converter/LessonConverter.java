@@ -1,7 +1,9 @@
 package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import pt.ipb.galconverterapi.dto.LessonDto;
 import pt.ipb.galconverterapi.model.*;
 import pt.ipb.galconverterapi.repository.*;
@@ -69,7 +71,7 @@ public class LessonConverter {
                                     && tad.getIdTipoAula() == detalhesAula.getIdTipoAula())
                             .findFirst()
                             .map(TipoAulaDisciplina::getHorasSemanais)
-                            .orElseThrow(() -> new RuntimeException(
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                     "TipoAulaDisciplina not found for detalhesAula: " + detalhesAula.getId()
                                             + " with idDiscip: " + detalhesAula.getIdDiscip()
                                             + " idTipoAula: " + detalhesAula.getIdTipoAula()

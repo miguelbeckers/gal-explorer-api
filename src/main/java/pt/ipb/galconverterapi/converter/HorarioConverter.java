@@ -1,7 +1,9 @@
 package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
 import pt.ipb.galconverterapi.model.Dia;
@@ -49,8 +51,8 @@ public class HorarioConverter {
             Dia dia = dias.stream()
                     .filter(d -> d.getWeekday() == timeslotDto.getDayOfWeek().getValue())
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Dia not found: "
-                            + timeslotDto.getDayOfWeek().getValue()));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Dia not found: " + timeslotDto.getDayOfWeek().getValue()));
 
             Time inicio = Time.valueOf(timeslotDto.getStartTime());
             Time fim = Time.valueOf(timeslotDto.getEndTime());
@@ -58,8 +60,8 @@ public class HorarioConverter {
             Tempo tempo = tempos.stream()
                     .filter(t -> t.getInicio().equals(inicio) && t.getFim().equals(fim))
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Tempo not found: "
-                            + timeslotDto.getStartTime() + " - " + timeslotDto.getEndTime()));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "Tempo not found: " + timeslotDto.getStartTime() + " - " + timeslotDto.getEndTime()));
 
             Horario horario = new Horario();
             horario.setId(timeslotDto.getId().intValue());

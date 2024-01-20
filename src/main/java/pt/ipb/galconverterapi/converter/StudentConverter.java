@@ -1,7 +1,9 @@
 package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import pt.ipb.galconverterapi.dto.StudentDto;
 import pt.ipb.galconverterapi.model.AlunoDisciplina;
 import pt.ipb.galconverterapi.model.DisciplinaCurso;
@@ -58,7 +60,7 @@ public class StudentConverter {
                             && dc.getIdDiscip() == alunoDisciplina.getIdDiscip()
                             && dc.getIdAno() == alunoDisciplina.getAno())
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                             "DisciplinaCurso not found for alunoDisciplina: " + alunoDisciplina.getId()
                                     + " with idCurso: " + alunoDisciplina.getIdCurso()
                                     + " idDiscip: " + alunoDisciplina.getIdDiscip()

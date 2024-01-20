@@ -1,7 +1,9 @@
 package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import pt.ipb.galconverterapi.dto.ClassroomDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
 import pt.ipb.galconverterapi.model.RecursoSala;
@@ -68,7 +70,8 @@ public class ClassroomConverter {
                     .filter(tipoSala -> tipoSala.getId() == sala.getIdTipo())
                     .findFirst()
                     .map(tipoSala -> (long) tipoSala.getId())
-                    .orElseThrow(() -> new RuntimeException("Classroom type not found: " + sala.getId())));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                            "TipoSala not found: " + sala.getId())));
 
             classroomDtos.add(classroomDto);
         }
