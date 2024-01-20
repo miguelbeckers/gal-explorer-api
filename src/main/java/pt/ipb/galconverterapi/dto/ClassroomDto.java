@@ -12,4 +12,5 @@ public class ClassroomDto {
     private String abbreviation;
     private List<Long> unavailability = new ArrayList<>();
     private List<Long> classroomResources = new ArrayList<>();
+    private Long type;
 }

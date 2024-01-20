@@ -6,9 +6,11 @@ import pt.ipb.galconverterapi.dto.ClassroomDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
 import pt.ipb.galconverterapi.model.RecursoSala;
 import pt.ipb.galconverterapi.model.Sala;
+import pt.ipb.galconverterapi.model.TipoSala;
 import pt.ipb.galconverterapi.repository.IndisponibilidadeRepository;
 import pt.ipb.galconverterapi.repository.RecursoSalaRepository;
 import pt.ipb.galconverterapi.repository.SalaRepository;
+import pt.ipb.galconverterapi.repository.TipoSalaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +27,15 @@ public class ClassroomConverter {
     private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
+    private TipoSalaRepository tipoSalaRepository;
+
+    @Autowired
     private TimeslotConverter timeslotConverter;
 
     public List<ClassroomDto> convert() {
         List<Sala> salas = salaRepository.findAll();
         List<RecursoSala> recursoSalas = recursoSalaRepository.findAll();
-
+        List<TipoSala> tipoSalas = tipoSalaRepository.findAll();
         List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
 
         List<ClassroomDto> classroomDtos = new ArrayList<>();
@@ -54,11 +59,16 @@ public class ClassroomConverter {
             List<TimeslotDto> professorUnavailability = timeslotConverter.convert(indisponibilidadesSala);
             classroomDto.setUnavailability(professorUnavailability.stream().map(TimeslotDto::getId).toList());
 
-            List<RecursoSala> recursoSalasSala = recursoSalas.stream()
-                    .filter(recursoSala -> recursoSala.getIdSala() == sala.getId()).toList();
+            classroomDto.setClassroomResources(recursoSalas.stream()
+                    .filter(recursoSala -> recursoSala.getIdSala() == sala.getId())
+                    .map(recursoSala -> (long) recursoSala.getId())
+                    .toList());
 
-            classroomDto.setClassroomResources(recursoSalasSala.stream()
-                    .map(recursoSala -> (long) recursoSala.getId()).toList());
+            classroomDto.setType(tipoSalas.stream()
+                    .filter(tipoSala -> tipoSala.getId() == sala.getIdTipo())
+                    .findFirst()
+                    .map(tipoSala -> (long) tipoSala.getId())
+                    .orElseThrow(() -> new RuntimeException("Classroom type not found: " + sala.getId())));
 
             classroomDtos.add(classroomDto);
         }
