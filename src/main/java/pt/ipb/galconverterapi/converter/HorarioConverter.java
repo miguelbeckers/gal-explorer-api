@@ -44,7 +44,7 @@ public class HorarioConverter {
 
         List<Horario> horarios = new ArrayList<>();
 
-        // TODO: identify sequence of timeslots to create blocks of lessons
+        // TODO: identify sequence of timeslots to merge them into a single horario
         for (LessonUnitDto lessonDto : lessonUntiDtos) {
             TimeslotDto timeslotDto = timeslotMap.get(lessonDto.getId());
 
