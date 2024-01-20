@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class LessonUnitDto {
     private Long id;
+    private Long lessonId;
     private String name;
     private List<Long> professors;
     private Long subjectCourse;

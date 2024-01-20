@@ -23,6 +23,7 @@ public class LessonUnitConverter {
             for(int i = 0; i < Math.ceil(lessonDto.getHoursPerWeek()); i++){
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
                 lessonUnitDto.setId(id++);
+                lessonUnitDto.setLessonId(lessonDto.getId());
                 lessonUnitDto.setName(lessonDto.getName());
                 lessonUnitDto.setProfessors(lessonDto.getProfessors());
                 lessonUnitDto.setSubjectCourse(lessonDto.getSubjectCourse());
