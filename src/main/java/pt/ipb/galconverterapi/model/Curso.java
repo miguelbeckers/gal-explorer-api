@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -34,17 +33,4 @@ public class Curso {
     private Date inicioAulas;
     @Column(name = "fim_aulas")
     private Date fimAulas;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Curso that = (Curso) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

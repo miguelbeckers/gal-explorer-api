@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,17 +33,4 @@ public class Docente {
     private Integer ipbCodEscola;
     @Column(name = "ipb_emp_num")
     private Integer ipbEmpNum;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Docente that = (Docente) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -31,17 +29,4 @@ public class DetalhesAula {
     private int idTipoAula;
     @Column(name = "turma")
     private String turma;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DetalhesAula that = (DetalhesAula) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

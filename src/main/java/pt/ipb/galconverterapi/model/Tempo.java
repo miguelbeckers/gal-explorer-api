@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Time;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -24,17 +23,4 @@ public class Tempo {
     private Time fim;
     @Column(name = "descricao")
     private String descricao;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tempo that = (Tempo) o;
-        return Objects.equals(inicio, that.inicio);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(inicio);
-    }
 }

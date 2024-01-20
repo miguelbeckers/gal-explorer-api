@@ -1,9 +1,10 @@
 package pt.ipb.galconverterapi.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -24,17 +25,4 @@ public class AlunoDisciplina {
     private int idCurso;
     @Column(name = "ano")
     private int ano;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AlunoDisciplina that = (AlunoDisciplina) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

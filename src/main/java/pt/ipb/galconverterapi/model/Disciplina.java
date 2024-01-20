@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -35,17 +33,4 @@ public class Disciplina {
     private Integer ipbNDisciplina;
     @Column(name = "ipb_n_opcao")
     private Integer ipbNOpcao;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Disciplina that = (Disciplina) o;
-        return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
