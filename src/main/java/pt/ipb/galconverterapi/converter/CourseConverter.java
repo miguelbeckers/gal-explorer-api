@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.dto.CourseDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
+import pt.ipb.galconverterapi.model.AnoCurso;
 import pt.ipb.galconverterapi.model.Curso;
 import pt.ipb.galconverterapi.model.Disciplina;
 import pt.ipb.galconverterapi.model.DisciplinaCurso;
-import pt.ipb.galconverterapi.repository.CursoRepository;
-import pt.ipb.galconverterapi.repository.DisciplinaCursoRepository;
-import pt.ipb.galconverterapi.repository.DisciplinaRepository;
-import pt.ipb.galconverterapi.repository.IndisponibilidadeRepository;
+import pt.ipb.galconverterapi.repository.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,16 +29,20 @@ public class CourseConverter {
     private IndisponibilidadeRepository indisponibilidadeRepository;
 
     @Autowired
+    private AnoCursoRepository anoCursoRepository;
+
+    @Autowired
     private TimeslotConverter timeslotConverter;
 
     public List<CourseDto> convert() {
         List<Curso> cursos = cursoRepository.findAll();
-        List<CourseDto> cours = new ArrayList<>();
+        List<CourseDto> courseDtos = new ArrayList<>();
 
         List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
-
         List<Disciplina> disciplinas = disciplinaRepository.findAll();
+        List<AnoCurso> anoCursos = anoCursoRepository.findAll();
+
         HashMap<Integer, Disciplina> disciplinaHashMap = new HashMap<>();
         for (Disciplina disciplina : disciplinas) {
             disciplinaHashMap.put(disciplina.getId(), disciplina);
@@ -76,9 +78,15 @@ public class CourseConverter {
             List<TimeslotDto> courseUnavailability = timeslotConverter.convert(indisponibilidadesCurso);
             courseDto.setUnavailability(courseUnavailability.stream().map(TimeslotDto::getId).toList());
 
-            cours.add(courseDto);
+            List<Long> anoCursosCurso = anoCursos.stream()
+                    .filter(anoCurso -> anoCurso.getIdCurso() == curso.getId())
+                    .map(anoCurso -> (long) anoCurso.getIdAno())
+                    .toList();
+
+            courseDto.setCoursePeriods(anoCursosCurso);
+            courseDtos.add(courseDto);
         }
 
-        return cours;
+        return courseDtos;
     }
 }
