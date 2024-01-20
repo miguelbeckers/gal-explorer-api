@@ -2,7 +2,7 @@ package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pt.ipb.galconverterapi.dto.LessonDto;
+import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
 import pt.ipb.galconverterapi.model.Dia;
 import pt.ipb.galconverterapi.model.Horario;
@@ -30,7 +30,7 @@ public class HorarioConverter {
     @Autowired
     private TempoRepository tempoRepository;
 
-    public List<Horario> convert(List<LessonDto> lessonDtos) {
+    public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
         List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
         List<Dia> dias = diaRepository.findAll();
         List<Tempo> tempos = tempoRepository.findAll();
@@ -42,7 +42,8 @@ public class HorarioConverter {
 
         List<Horario> horarios = new ArrayList<>();
 
-        for (LessonDto lessonDto : lessonDtos) {
+        // TODO: identify sequence of timeslots to create blocks of lessons
+        for (LessonUnitDto lessonDto : lessonUntiDtos) {
             TimeslotDto timeslotDto = timeslotMap.get(lessonDto.getId());
 
             Dia dia = dias.stream()

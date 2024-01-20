@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pt.ipb.galconverterapi.converter.HorarioConverter;
 import pt.ipb.galconverterapi.dto.LessonDto;
+import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.model.Horario;
 
 import java.util.List;
@@ -20,9 +21,10 @@ import java.util.List;
 public class HorarioController {
     @Autowired
     private HorarioConverter horarioConverter;
+
     @PostMapping
-    public ResponseEntity<Object> postLessons(@RequestBody List<LessonDto> lessonDtos) {
-        List<Horario> horarios = horarioConverter.convert(lessonDtos);
+    public ResponseEntity<Object> postLessonUnits(@RequestBody List<LessonUnitDto> lessonUnitDtos) {
+        List<Horario> horarios = horarioConverter.convert(lessonUnitDtos);
         return ResponseEntity.status(HttpStatus.CREATED).body(horarios);
     }
 }
