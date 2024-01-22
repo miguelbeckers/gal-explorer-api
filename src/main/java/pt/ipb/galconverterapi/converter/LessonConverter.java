@@ -66,17 +66,18 @@ public class LessonConverter {
 //                            .map(alunoDisciplina -> (long) alunoDisciplina.getIdAluno())
 //                            .toList());
 
-                    lessonDto.setHoursPerWeek(tipoAulaDisciplinas.stream()
+                    TipoAulaDisciplina tipoAulaDisciplina = tipoAulaDisciplinas.stream()
                             .filter(tad -> tad.getIdDiscip() == detalhesAula.getIdDiscip()
                                     && tad.getIdTipoAula() == detalhesAula.getIdTipoAula())
                             .findFirst()
-                            .map(TipoAulaDisciplina::getHorasSemanais)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                     "TipoAulaDisciplina not found for detalhesAula: " + detalhesAula.getId()
                                             + " with idDiscip: " + detalhesAula.getIdDiscip()
                                             + " idTipoAula: " + detalhesAula.getIdTipoAula()
-                            )));
+                            ));
 
+                    lessonDto.setHoursPerWeek(tipoAulaDisciplina.getHorasSemanais());
+                    lessonDto.setBlocks(tipoAulaDisciplina.getNumBlocos());
                     lessonDtos.add(lessonDto);
                 }
             }

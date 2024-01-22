@@ -10,6 +10,7 @@ public class LessonDto {
     private Long id;
     private String name;
     private Double hoursPerWeek;
+    private Integer blocks;
     private List<Long> professors;
     private Long subjectCourse;
     private Long subjectType;
