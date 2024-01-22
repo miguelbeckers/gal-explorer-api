@@ -22,7 +22,7 @@ public class SubjectConverter {
             SubjectDto subjectDto = new SubjectDto();
             subjectDto.setId((long) disciplina.getId());
             subjectDto.setName(disciplina.getNome());
-            subjectDto.setCode(disciplina.getAbrev());
+            subjectDto.setAbbreviation(disciplina.getAbrev());
             subjectDtos.add(subjectDto);
         }
 
