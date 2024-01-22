@@ -19,8 +19,8 @@ public class LessonUnitConverter {
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;
 
-        for(LessonDto lessonDto: lessonDtos){
-            for(int i = 0; i < Math.ceil(lessonDto.getHoursPerWeek()); i++){
+        for (LessonDto lessonDto : lessonDtos) {
+            for (int i = 0; i < Math.ceil(lessonDto.getHoursPerWeek()); i++) {
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
                 lessonUnitDto.setId(id++);
                 lessonUnitDto.setLessonId(lessonDto.getId());

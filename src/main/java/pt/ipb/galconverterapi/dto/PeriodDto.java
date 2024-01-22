@@ -8,4 +8,3 @@ public class PeriodDto {
     private String name;
     private String abbreviation;
 }
-

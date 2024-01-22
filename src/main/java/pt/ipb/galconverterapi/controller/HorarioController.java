@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pt.ipb.galconverterapi.converter.HorarioConverter;
-import pt.ipb.galconverterapi.dto.LessonDto;
 import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.model.Horario;
 
