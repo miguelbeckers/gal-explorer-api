@@ -10,7 +10,7 @@ import pt.ipb.galconverterapi.converter.LessonUnitConverter;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/lessons-units")
+@RequestMapping("/lesson-units")
 public class LessonUnitController {
     @Autowired
     private LessonUnitConverter lessonUnitConverter;

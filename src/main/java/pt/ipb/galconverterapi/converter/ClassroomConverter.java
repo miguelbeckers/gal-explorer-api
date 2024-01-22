@@ -66,7 +66,7 @@ public class ClassroomConverter {
                     .map(recursoSala -> (long) recursoSala.getId())
                     .toList());
 
-            classroomDto.setTypeId(tipoSalas.stream()
+            classroomDto.setClassroomTypeId(tipoSalas.stream()
                     .filter(tipoSala -> tipoSala.getId() == sala.getIdTipo())
                     .findFirst()
                     .map(tipoSala -> (long) tipoSala.getId())
