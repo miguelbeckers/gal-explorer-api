@@ -24,12 +24,6 @@ public class LessonUnitConverter {
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
                 lessonUnitDto.setId(id++);
                 lessonUnitDto.setLessonId(lessonDto.getId());
-                lessonUnitDto.setName(lessonDto.getName());
-                lessonUnitDto.setProfessors(lessonDto.getProfessors());
-                lessonUnitDto.setSubjectCourse(lessonDto.getSubjectCourse());
-                lessonUnitDto.setSubjectType(lessonDto.getSubjectType());
-                lessonUnitDto.setLessonResources(lessonDto.getLessonResources());
-                lessonUnitDto.setStudents(lessonDto.getStudents());
             }
         }
 
