@@ -8,5 +8,5 @@ import java.util.List;
 public class TimetableDto {
     private List<Long> timeslots;
     private List<Long> classrooms;
-    private List<Long> lessons;
+    private List<Long> lessonUnits;
 }
