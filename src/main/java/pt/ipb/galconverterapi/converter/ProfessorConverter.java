@@ -32,7 +32,7 @@ public class ProfessorConverter {
             professorDto.setId((long) docente.getId());
             professorDto.setName(docente.getNome());
             professorDto.setAbbreviation(docente.getAbrev());
-            professorDto.setDepartment((long) docente.getIdDepart());
+            professorDto.setDepartmentId((long) docente.getIdDepart());
 
             List<Object[]> indisponibilidadesProfessor = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class ProfessorConverter {
             }
 
             List<TimeslotDto> professorUnavailability = timeslotConverter.convert(indisponibilidadesProfessor);
-            professorDto.setUnavailability(professorUnavailability.stream().map(TimeslotDto::getId).toList());
+            professorDto.setUnavailabilityIds(professorUnavailability.stream().map(TimeslotDto::getId).toList());
 
             professorDtos.add(professorDto);
         }

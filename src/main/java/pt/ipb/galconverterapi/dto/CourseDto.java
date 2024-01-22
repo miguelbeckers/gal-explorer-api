@@ -10,7 +10,7 @@ public class CourseDto {
     private Long id;
     private String name;
     private String abbreviation;
-    private Long department;
-    private List<Long> unavailability = new ArrayList<>();
-    private List<Long> coursePeriods = new ArrayList<>();
+    private Long departmentId;
+    private List<Long> unavailabilityIds = new ArrayList<>();
+    private List<Long> coursePeriodIds = new ArrayList<>();
 }

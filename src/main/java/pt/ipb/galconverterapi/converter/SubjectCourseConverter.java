@@ -21,9 +21,9 @@ public class SubjectCourseConverter {
         for (DisciplinaCurso disciplinaCurso : disciplinaCursos) {
             SubjectCourseDto subjectCourseDto = new SubjectCourseDto();
             subjectCourseDto.setId((long) disciplinaCurso.getId());
-            subjectCourseDto.setCourse((long) disciplinaCurso.getIdCurso());
-            subjectCourseDto.setSubject((long) disciplinaCurso.getIdDiscip());
-            subjectCourseDto.setPeriod((long) disciplinaCurso.getIdAno());
+            subjectCourseDto.setCourseId((long) disciplinaCurso.getIdCurso());
+            subjectCourseDto.setSubjectId((long) disciplinaCurso.getIdDiscip());
+            subjectCourseDto.setPeriodId((long) disciplinaCurso.getIdAno());
             subjectCoursDtos.add(subjectCourseDto);
         }
 

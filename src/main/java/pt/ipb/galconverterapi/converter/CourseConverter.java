@@ -61,7 +61,7 @@ public class CourseConverter {
 
             if (disciplinaCurso != null) {
                 Disciplina disciplina = disciplinaHashMap.get(disciplinaCurso.getIdDiscip());
-                courseDto.setDepartment((long) disciplina.getIdDepart());
+                courseDto.setDepartmentId((long) disciplina.getIdDepart());
             }
 
             List<Object[]> indisponibilidadesCurso = new ArrayList<>();
@@ -76,14 +76,14 @@ public class CourseConverter {
             }
 
             List<TimeslotDto> courseUnavailability = timeslotConverter.convert(indisponibilidadesCurso);
-            courseDto.setUnavailability(courseUnavailability.stream().map(TimeslotDto::getId).toList());
+            courseDto.setUnavailabilityIds(courseUnavailability.stream().map(TimeslotDto::getId).toList());
 
             List<Long> anoCursosCurso = anoCursos.stream()
                     .filter(anoCurso -> anoCurso.getIdCurso() == curso.getId())
                     .map(anoCurso -> (long) anoCurso.getIdAno())
                     .toList();
 
-            courseDto.setCoursePeriods(anoCursosCurso);
+            courseDto.setCoursePeriodIds(anoCursosCurso);
             courseDtos.add(courseDto);
         }
 

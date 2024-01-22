@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class LessonResourceDto {
     private Long id;
-    private Long resource;
+    private Long resourceId;
     private double quantity;
 }

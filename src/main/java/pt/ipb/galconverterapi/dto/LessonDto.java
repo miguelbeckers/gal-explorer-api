@@ -11,9 +11,9 @@ public class LessonDto {
     private String name;
     private Double hoursPerWeek;
     private Integer blocks;
-    private List<Long> professors;
-    private Long subjectCourse;
-    private Long subjectType;
-    private List<Long> lessonResources = new ArrayList<>();
-    private List<Long> students = new ArrayList<>();
+    private Long subjectCourseId;
+    private Long subjectTypeId;
+    private List<Long> professorIds = new ArrayList<>();
+    private List<Long> lessonResourceIds = new ArrayList<>();
+    private List<Long> studentIds = new ArrayList<>();
 }

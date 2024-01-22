@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class SubjectCourseDto {
     private Long id;
-    private Long course;
-    private Long subject;
-    private Long period;
+    private Long courseId;
+    private Long subjectId;
+    private Long periodId;
 }

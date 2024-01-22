@@ -68,7 +68,7 @@ public class HorarioConverter {
             horario.setIdDia(dia.getId());
             horario.setInicio(tempo.getInicio());
             horario.setFim(tempo.getFim());
-            horario.setIdSala(lessonDto.getClassroom().intValue());
+            horario.setIdSala(lessonDto.getClassroomId().intValue());
             horarios.add(horario);
         }
 

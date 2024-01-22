@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class TimetableDto {
-    private List<Long> timeslots;
-    private List<Long> classrooms;
-    private List<Long> lessonUnits;
+    private List<Long> timeslotIds;
+    private List<Long> classroomIds;
+    private List<Long> lessonUnitIds;
 }

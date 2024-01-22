@@ -22,7 +22,7 @@ public class ClassroomResourceConverter {
             ClassroomResourceDto classroomResourceDto = new ClassroomResourceDto();
             classroomResourceDto.setId((long) recursoSala.getId());
             classroomResourceDto.setQuantity(recursoSala.getQuantidade());
-            classroomResourceDto.setResource((long) recursoSala.getIdRec());
+            classroomResourceDto.setResourceId((long) recursoSala.getIdRec());
             classroomResourceDtos.add(classroomResourceDto);
         }
 

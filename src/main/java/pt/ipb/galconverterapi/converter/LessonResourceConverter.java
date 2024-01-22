@@ -22,7 +22,7 @@ public class LessonResourceConverter {
             LessonResourceDto lessonResourceDto = new LessonResourceDto();
             lessonResourceDto.setId((long) recursoDisciplina.getId());
             lessonResourceDto.setQuantity(recursoDisciplina.getQuantidade());
-            lessonResourceDto.setResource((long) recursoDisciplina.getIdRec());
+            lessonResourceDto.setResourceId((long) recursoDisciplina.getIdRec());
             lessonResourceDtos.add(lessonResourceDto);
         }
 

@@ -6,6 +6,6 @@ import lombok.Data;
 public class LessonUnitDto {
     private Long id;
     private Long lessonId;
-    private Long timeslot;
-    private Long classroom;
+    private Long timeslotId;
+    private Long classroomId;
 }

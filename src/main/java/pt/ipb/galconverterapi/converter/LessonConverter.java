@@ -48,15 +48,15 @@ public class LessonConverter {
                     LessonDto lessonDto = new LessonDto();
                     lessonDto.setId((long) detalhesAula.getIdAula());
                     lessonDto.setName(detalhesAula.getTurma());
-                    lessonDto.setSubjectCourse((long) disciplinaCurso.getId());
-                    lessonDto.setSubjectType((long) detalhesAula.getIdTipoAula());
+                    lessonDto.setSubjectCourseId((long) disciplinaCurso.getId());
+                    lessonDto.setSubjectTypeId((long) detalhesAula.getIdTipoAula());
 
-                    lessonDto.setProfessors(aulaDocentes.stream()
+                    lessonDto.setProfessorIds(aulaDocentes.stream()
                             .filter(aulaDocente -> aulaDocente.getIdAula() == detalhesAula.getIdAula())
                             .map(aulaDocente -> (long) aulaDocente.getIdDocente())
                             .toList());
 
-                    lessonDto.setLessonResources(recursoDisciplinas.stream()
+                    lessonDto.setLessonResourceIds(recursoDisciplinas.stream()
                             .filter(recursoDisciplina -> recursoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip())
                             .map(recursoDisciplina -> (long) recursoDisciplina.getId())
                             .toList());

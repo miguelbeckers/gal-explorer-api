@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class StudentDto {
     private Long id;
-    private List<Long> subjectCourses = new ArrayList<>();
+    private List<Long> subjectCourseIds = new ArrayList<>();
 }

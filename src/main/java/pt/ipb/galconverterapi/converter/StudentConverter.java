@@ -38,7 +38,7 @@ public class StudentConverter {
             if (!studentMap.containsKey(id)) {
                 StudentDto studentDto = new StudentDto();
                 studentDto.setId(id);
-                studentDto.setSubjectCourses(List.of());
+                studentDto.setSubjectCourseIds(List.of());
                 studentMap.put(id, studentDto);
             }
         }
@@ -70,13 +70,13 @@ public class StudentConverter {
             if (!studentMap.containsKey(id)) {
                 StudentDto studentDto = new StudentDto();
                 studentDto.setId(id);
-                studentDto.setSubjectCourses(List.of((long) disciplinaCurso.getId()));
+                studentDto.setSubjectCourseIds(List.of((long) disciplinaCurso.getId()));
                 studentMap.put(id, studentDto);
             } else {
                 StudentDto studentDto = studentMap.get(id);
-                List<Long> subjectCourses = new ArrayList<>(studentDto.getSubjectCourses());
+                List<Long> subjectCourses = new ArrayList<>(studentDto.getSubjectCourseIds());
                 subjectCourses.add((long) disciplinaCurso.getId());
-                studentDto.setSubjectCourses(subjectCourses);
+                studentDto.setSubjectCourseIds(subjectCourses);
             }
         }
 
