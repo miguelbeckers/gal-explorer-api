@@ -83,7 +83,7 @@ public class CourseConverter {
                     .map(anoCurso -> (long) anoCurso.getIdAno())
                     .toList();
 
-            courseDto.setCoursePeriodIds(anoCursosCurso);
+            courseDto.setPeriodIds(anoCursosCurso);
             courseDtos.add(courseDto);
         }
 
