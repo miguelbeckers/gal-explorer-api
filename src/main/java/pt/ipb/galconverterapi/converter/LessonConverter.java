@@ -57,7 +57,12 @@ public class LessonConverter {
                             .toList());
 
                     lessonDto.setLessonResourceIds(recursoDisciplinas.stream()
-                            .filter(recursoDisciplina -> recursoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip())
+                            .filter(recursoDisciplina ->
+                                    recursoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip()
+                                    && recursoDisciplina.getIdTipoAula() == detalhesAula.getIdTipoAula()
+                                    && recursoDisciplina.getIdAno() == detalhesAula.getIdAno()
+                                    && recursoDisciplina.getIdCurso() == detalhesAula.getIdCurso()
+                            )
                             .map(recursoDisciplina -> (long) recursoDisciplina.getId())
                             .toList());
 
@@ -68,7 +73,8 @@ public class LessonConverter {
 
                     TipoAulaDisciplina tipoAulaDisciplina = tipoAulaDisciplinas.stream()
                             .filter(tad -> tad.getIdDiscip() == detalhesAula.getIdDiscip()
-                                    && tad.getIdTipoAula() == detalhesAula.getIdTipoAula())
+                                    && tad.getIdTipoAula() == detalhesAula.getIdTipoAula()
+                            )
                             .findFirst()
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                     "TipoAulaDisciplina not found for detalhesAula: " + detalhesAula.getId()
