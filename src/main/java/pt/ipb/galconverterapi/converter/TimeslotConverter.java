@@ -30,16 +30,27 @@ public class TimeslotConverter {
         List<Dia> dias = diaRepository.findAll();
 
         List<TimeslotDto> timeslotDtos = new ArrayList<>();
-        long id = 1;
         for (Tempo tempo : tempos) {
             for (Dia dia : dias) {
                 TimeslotDto timeslotDto = new TimeslotDto();
-                timeslotDto.setId(id++);
                 timeslotDto.setDayOfWeek(DayOfWeek.of(dia.getWeekday()));
                 timeslotDto.setStartTime(tempo.getInicio().toLocalTime());
                 timeslotDto.setEndTime(tempo.getFim().toLocalTime());
                 timeslotDtos.add(timeslotDto);
             }
+        }
+
+        timeslotDtos.sort((t1, t2) -> {
+            if (t1.getDayOfWeek().getValue() < t2.getDayOfWeek().getValue()) return -1;
+            if (t1.getDayOfWeek().getValue() > t2.getDayOfWeek().getValue()) return 1;
+            if (t1.getStartTime().isBefore(t2.getStartTime())) return -1;
+            if (t1.getStartTime().isAfter(t2.getStartTime())) return 1;
+            return 0;
+        });
+
+        long id = 1;
+        for (TimeslotDto timeslotDto : timeslotDtos) {
+            timeslotDto.setId(id++);
         }
 
         this.timeslotDtos = timeslotDtos;
