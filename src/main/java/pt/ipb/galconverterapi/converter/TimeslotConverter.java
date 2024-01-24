@@ -15,11 +15,14 @@ import java.util.List;
 
 @Component
 public class TimeslotConverter {
-    @Autowired
-    private TempoRepository tempoRepository;
+    private final TempoRepository tempoRepository;
+    private final DiaRepository diaRepository;
 
     @Autowired
-    private DiaRepository diaRepository;
+    public TimeslotConverter(TempoRepository tempoRepository, DiaRepository diaRepository) {
+        this.tempoRepository = tempoRepository;
+        this.diaRepository = diaRepository;
+    }
 
     private List<TimeslotDto> timeslotDtos = new ArrayList<>();
 

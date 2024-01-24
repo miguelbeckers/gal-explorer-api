@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.CourseConverter;
 @CrossOrigin
 @RequestMapping("/courses")
 public class CourseController {
+    private final CourseConverter courseConverter;
+
     @Autowired
-    private CourseConverter courseConverter;
+    public CourseController(CourseConverter courseConverter) {
+        this.courseConverter = courseConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getCourses() {

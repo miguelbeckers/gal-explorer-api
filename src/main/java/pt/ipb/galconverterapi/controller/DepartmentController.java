@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.DepartmentConverter;
 @CrossOrigin
 @RequestMapping("/departments")
 public class DepartmentController {
+    private final DepartmentConverter departmentConverter;
+
     @Autowired
-    private DepartmentConverter departmentConverter;
+    public DepartmentController(DepartmentConverter departmentConverter) {
+        this.departmentConverter = departmentConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getDepartments() {

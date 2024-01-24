@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.SubjectConverter;
 @CrossOrigin
 @RequestMapping("/subjects")
 public class SubjectController {
+    private final SubjectConverter subjectConverter;
+
     @Autowired
-    private SubjectConverter subjectConverter;
+    public SubjectController(SubjectConverter subjectConverter) {
+        this.subjectConverter = subjectConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getSubjects() {

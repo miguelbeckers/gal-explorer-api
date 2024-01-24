@@ -11,8 +11,12 @@ import java.util.List;
 
 @Component
 public class LessonResourceConverter {
+    private final RecursoDisciplinaRepository recursoDisciplinaRepository;
+
     @Autowired
-    private RecursoDisciplinaRepository recursoDisciplinaRepository;
+    public LessonResourceConverter(RecursoDisciplinaRepository recursoDisciplinaRepository) {
+        this.recursoDisciplinaRepository = recursoDisciplinaRepository;
+    }
 
     public List<LessonResourceDto> convert() {
         List<RecursoDisciplina> recursoDisciplinas = recursoDisciplinaRepository.findAll();

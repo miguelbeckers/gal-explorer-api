@@ -13,23 +13,27 @@ import java.util.List;
 
 @Component
 public class LessonConverter {
-    @Autowired
-    private DetalhesAulaRepository detalhesAulaRepository;
+    private final DetalhesAulaRepository detalhesAulaRepository;
+    private final DisciplinaCursoRepository disciplinaCursoRepository;
+    private final AulaDocenteRepository aulaDocenteRepository;
+    private final RecursoDisciplinaRepository recursoDisciplinaRepository;
+    private final AlunoDisciplinaRepository alunoDisciplinaRepository;
+    private final TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository;
 
     @Autowired
-    private DisciplinaCursoRepository disciplinaCursoRepository;
-
-    @Autowired
-    private AulaDocenteRepository aulaDocenteRepository;
-
-    @Autowired
-    private RecursoDisciplinaRepository recursoDisciplinaRepository;
-
-    @Autowired
-    private AlunoDisciplinaRepository alunoDisciplinaRepository;
-
-    @Autowired
-    private TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository;
+    public LessonConverter(DetalhesAulaRepository detalhesAulaRepository,
+                           DisciplinaCursoRepository disciplinaCursoRepository,
+                           AulaDocenteRepository aulaDocenteRepository,
+                           RecursoDisciplinaRepository recursoDisciplinaRepository,
+                           AlunoDisciplinaRepository alunoDisciplinaRepository,
+                           TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository) {
+        this.detalhesAulaRepository = detalhesAulaRepository;
+        this.disciplinaCursoRepository = disciplinaCursoRepository;
+        this.aulaDocenteRepository = aulaDocenteRepository;
+        this.recursoDisciplinaRepository = recursoDisciplinaRepository;
+        this.alunoDisciplinaRepository = alunoDisciplinaRepository;
+        this.tipoAulaDisciplinaRepository = tipoAulaDisciplinaRepository;
+    }
 
     public List<LessonDto> convert() {
         List<DetalhesAula> detalhesAulas = detalhesAulaRepository.findAll();
@@ -59,9 +63,9 @@ public class LessonConverter {
                     lessonDto.setLessonResourceIds(recursoDisciplinas.stream()
                             .filter(recursoDisciplina ->
                                     recursoDisciplina.getIdDiscip() == detalhesAula.getIdDiscip()
-                                    && recursoDisciplina.getIdTipoAula() == detalhesAula.getIdTipoAula()
-                                    && recursoDisciplina.getIdAno() == detalhesAula.getIdAno()
-                                    && recursoDisciplina.getIdCurso() == detalhesAula.getIdCurso()
+                                            && recursoDisciplina.getIdTipoAula() == detalhesAula.getIdTipoAula()
+                                            && recursoDisciplina.getIdAno() == detalhesAula.getIdAno()
+                                            && recursoDisciplina.getIdCurso() == detalhesAula.getIdCurso()
                             )
                             .map(recursoDisciplina -> (long) recursoDisciplina.getId())
                             .toList());

@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.TimeslotConverter;
 @CrossOrigin
 @RequestMapping("/timeslots")
 public class TimeslotController {
+    private final TimeslotConverter timeslotConverter;
+
     @Autowired
-    private TimeslotConverter timeslotConverter;
+    public TimeslotController(TimeslotConverter timeslotConverter) {
+        this.timeslotConverter = timeslotConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getTimeslots() {

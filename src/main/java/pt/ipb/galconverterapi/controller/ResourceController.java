@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.ResourceConverter;
 @CrossOrigin
 @RequestMapping("/resources")
 public class ResourceController {
+    private final ResourceConverter resourceConverter;
+
     @Autowired
-    private ResourceConverter resourceConverter;
+    public ResourceController(ResourceConverter resourceConverter) {
+        this.resourceConverter = resourceConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getResources() {

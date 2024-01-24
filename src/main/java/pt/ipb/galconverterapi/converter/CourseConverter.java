@@ -16,23 +16,27 @@ import java.util.List;
 
 @Component
 public class CourseConverter {
-    @Autowired
-    private CursoRepository cursoRepository;
+    private final CursoRepository cursoRepository;
+    private final DisciplinaCursoRepository disciplinaCursoRepository;
+    private final DisciplinaRepository disciplinaRepository;
+    private final IndisponibilidadeRepository indisponibilidadeRepository;
+    private final AnoCursoRepository anoCursoRepository;
+    private final TimeslotConverter timeslotConverter;
 
     @Autowired
-    private DisciplinaCursoRepository disciplinaCursoRepository;
-
-    @Autowired
-    private DisciplinaRepository disciplinaRepository;
-
-    @Autowired
-    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
-    private AnoCursoRepository anoCursoRepository;
-
-    @Autowired
-    private TimeslotConverter timeslotConverter;
+    public CourseConverter(CursoRepository cursoRepository,
+                           DisciplinaCursoRepository disciplinaCursoRepository,
+                           DisciplinaRepository disciplinaRepository,
+                           IndisponibilidadeRepository indisponibilidadeRepository,
+                           AnoCursoRepository anoCursoRepository,
+                           TimeslotConverter timeslotConverter) {
+        this.cursoRepository = cursoRepository;
+        this.disciplinaCursoRepository = disciplinaCursoRepository;
+        this.disciplinaRepository = disciplinaRepository;
+        this.indisponibilidadeRepository = indisponibilidadeRepository;
+        this.anoCursoRepository = anoCursoRepository;
+        this.timeslotConverter = timeslotConverter;
+    }
 
     public List<CourseDto> convert() {
         List<Curso> cursos = cursoRepository.findAll();

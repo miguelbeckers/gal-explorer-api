@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.PeriodConverter;
 @CrossOrigin
 @RequestMapping("/periods")
 public class PeriodController {
+    private final PeriodConverter periodConverter;
+
     @Autowired
-    private PeriodConverter periodConverter;
+    public PeriodController(PeriodConverter periodConverter) {
+        this.periodConverter = periodConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getPeriods() {

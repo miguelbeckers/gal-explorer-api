@@ -13,14 +13,19 @@ import java.util.List;
 
 @Component
 public class ProfessorConverter {
-    @Autowired
-    private DocenteRepository docenteRepository;
+    private final DocenteRepository docenteRepository;
+    private final IndisponibilidadeRepository indisponibilidadeRepository;
+    private final TimeslotConverter timeslotConverter;
 
     @Autowired
-    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
-    private TimeslotConverter timeslotConverter;
+    public ProfessorConverter(
+            DocenteRepository docenteRepository,
+            IndisponibilidadeRepository indisponibilidadeRepository,
+            TimeslotConverter timeslotConverter) {
+        this.docenteRepository = docenteRepository;
+        this.indisponibilidadeRepository = indisponibilidadeRepository;
+        this.timeslotConverter = timeslotConverter;
+    }
 
     public List<ProfessorDto> convert() {
         List<Docente> docentes = docenteRepository.findAll();

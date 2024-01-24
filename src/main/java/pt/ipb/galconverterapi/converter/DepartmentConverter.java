@@ -11,8 +11,12 @@ import java.util.List;
 
 @Component
 public class DepartmentConverter {
+    private final DepartamentoRepository departamentoRepository;
+
     @Autowired
-    private DepartamentoRepository departamentoRepository;
+    public DepartmentConverter(DepartamentoRepository departamentoRepository) {
+        this.departamentoRepository = departamentoRepository;
+    }
 
     public List<DepartmentDto> convert() {
         List<Departamento> departamentos = departamentoRepository.findAll();

@@ -12,8 +12,12 @@ import java.util.List;
 
 @Component
 public class PeriodConverter {
+    private final AnoRepository anoRepository;
+
     @Autowired
-    private AnoRepository anoRepository;
+    public PeriodConverter(AnoRepository anoRepository) {
+        this.anoRepository = anoRepository;
+    }
 
     public List<PeriodDto> convert() {
         List<Ano> anos = anoRepository.findAll();

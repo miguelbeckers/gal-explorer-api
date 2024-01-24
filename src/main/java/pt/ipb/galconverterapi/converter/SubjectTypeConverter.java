@@ -11,8 +11,12 @@ import java.util.List;
 
 @Component
 public class SubjectTypeConverter {
+    private final TipoAulaRepository tipoAulaRepository;
+
     @Autowired
-    private TipoAulaRepository tipoAulaRepository;
+    public SubjectTypeConverter(TipoAulaRepository tipoAulaRepository) {
+        this.tipoAulaRepository = tipoAulaRepository;
+    }
 
     public List<SubjectTypeDto> convert() {
         List<TipoAula> tipoAulas = tipoAulaRepository.findAll();

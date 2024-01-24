@@ -19,20 +19,24 @@ import java.util.List;
 
 @Component
 public class ClassroomConverter {
-    @Autowired
-    private SalaRepository salaRepository;
+    private final SalaRepository salaRepository;
+    private final RecursoSalaRepository recursoSalaRepository;
+    private final IndisponibilidadeRepository indisponibilidadeRepository;
+    private final TipoSalaRepository tipoSalaRepository;
+    private final TimeslotConverter timeslotConverter;
 
     @Autowired
-    private RecursoSalaRepository recursoSalaRepository;
-
-    @Autowired
-    private IndisponibilidadeRepository indisponibilidadeRepository;
-
-    @Autowired
-    private TipoSalaRepository tipoSalaRepository;
-
-    @Autowired
-    private TimeslotConverter timeslotConverter;
+    public ClassroomConverter(SalaRepository salaRepository,
+                              RecursoSalaRepository recursoSalaRepository,
+                              IndisponibilidadeRepository indisponibilidadeRepository,
+                              TipoSalaRepository tipoSalaRepository,
+                              TimeslotConverter timeslotConverter) {
+        this.salaRepository = salaRepository;
+        this.recursoSalaRepository = recursoSalaRepository;
+        this.indisponibilidadeRepository = indisponibilidadeRepository;
+        this.tipoSalaRepository = tipoSalaRepository;
+        this.timeslotConverter = timeslotConverter;
+    }
 
     public List<ClassroomDto> convert() {
         List<Sala> salas = salaRepository.findAll();

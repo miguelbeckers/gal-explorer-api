@@ -12,8 +12,12 @@ import pt.ipb.galconverterapi.converter.ProfessorConverter;
 @CrossOrigin
 @RequestMapping("/professors")
 public class ProfessorController {
+    private final ProfessorConverter professorConverter;
+
     @Autowired
-    private ProfessorConverter professorConverter;
+    public ProfessorController(ProfessorConverter professorConverter) {
+        this.professorConverter = professorConverter;
+    }
 
     @GetMapping
     public ResponseEntity<Object> getProfessors() {

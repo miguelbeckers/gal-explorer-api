@@ -11,8 +11,12 @@ import java.util.List;
 
 @Component
 public class SubjectConverter {
+    private final DisciplinaRepository disciplinaRepository;
+
     @Autowired
-    private DisciplinaRepository disciplinaRepository;
+    public SubjectConverter(DisciplinaRepository disciplinaRepository) {
+        this.disciplinaRepository = disciplinaRepository;
+    }
 
     public List<SubjectDto> convert() {
         List<Disciplina> disciplinas = disciplinaRepository.findAll();

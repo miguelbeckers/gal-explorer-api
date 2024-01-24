@@ -10,8 +10,12 @@ import java.util.List;
 
 @Component
 public class LessonUnitConverter {
+    private final LessonConverter lessonConverter;
+
     @Autowired
-    private LessonConverter lessonConverter;
+    public LessonUnitConverter(LessonConverter lessonConverter) {
+        this.lessonConverter = lessonConverter;
+    }
 
     public List<LessonUnitDto> convert() {
         List<LessonDto> lessonDtos = lessonConverter.convert();

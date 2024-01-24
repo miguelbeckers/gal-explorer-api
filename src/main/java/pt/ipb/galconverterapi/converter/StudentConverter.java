@@ -16,11 +16,15 @@ import java.util.List;
 
 @Component
 public class StudentConverter {
-    @Autowired
-    private AlunoDisciplinaRepository alunoDisciplinaRepository;
+    private final AlunoDisciplinaRepository alunoDisciplinaRepository;
+    private final DisciplinaCursoRepository disciplinaCursoRepository;
 
     @Autowired
-    private DisciplinaCursoRepository disciplinaCursoRepository;
+    public StudentConverter(AlunoDisciplinaRepository alunoDisciplinaRepository,
+                            DisciplinaCursoRepository disciplinaCursoRepository) {
+        this.alunoDisciplinaRepository = alunoDisciplinaRepository;
+        this.disciplinaCursoRepository = disciplinaCursoRepository;
+    }
 
     public List<StudentDto> convert() {
         return getStudentsWithoutSubjectCourses();

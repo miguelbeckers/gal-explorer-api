@@ -20,17 +20,21 @@ import java.util.List;
 
 @Component
 public class HorarioConverter {
-    @Autowired
-    private HorarioRepository horarioRepository;
+    private final HorarioRepository horarioRepository;
+    private final TimeslotConverter timeslotConverter;
+    private final DiaRepository diaRepository;
+    private final TempoRepository tempoRepository;
 
     @Autowired
-    private TimeslotConverter timeslotConverter;
-
-    @Autowired
-    private DiaRepository diaRepository;
-
-    @Autowired
-    private TempoRepository tempoRepository;
+    public HorarioConverter(HorarioRepository horarioRepository,
+                            TimeslotConverter timeslotConverter,
+                            DiaRepository diaRepository,
+                            TempoRepository tempoRepository) {
+        this.horarioRepository = horarioRepository;
+        this.timeslotConverter = timeslotConverter;
+        this.diaRepository = diaRepository;
+        this.tempoRepository = tempoRepository;
+    }
 
     public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
         List<TimeslotDto> timeslotDtos = timeslotConverter.convert();

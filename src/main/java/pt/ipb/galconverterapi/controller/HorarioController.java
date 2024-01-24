@@ -18,8 +18,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/horarios")
 public class HorarioController {
+    private final HorarioConverter horarioConverter;
+
     @Autowired
-    private HorarioConverter horarioConverter;
+    public HorarioController(HorarioConverter horarioConverter) {
+        this.horarioConverter = horarioConverter;
+    }
 
     @PostMapping
     public ResponseEntity<Object> postLessonUnits(@RequestBody List<LessonUnitDto> lessonUnitDtos) {
