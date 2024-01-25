@@ -9,8 +9,8 @@ import pt.ipb.galconverterapi.dto.LessonDto;
 import pt.ipb.galconverterapi.model.*;
 import pt.ipb.galconverterapi.repository.*;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -21,6 +21,7 @@ public class LessonConverter {
     private final RecursoDisciplinaRepository recursoDisciplinaRepository;
     private final AlunoDisciplinaRepository alunoDisciplinaRepository;
     private final TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository;
+    private final TipoAulaRepository tipoAulaRepository;
 
     @Getter
     private List<LessonDto> lessonDtos = new ArrayList<>();
@@ -34,13 +35,15 @@ public class LessonConverter {
                            AulaDocenteRepository aulaDocenteRepository,
                            RecursoDisciplinaRepository recursoDisciplinaRepository,
                            AlunoDisciplinaRepository alunoDisciplinaRepository,
-                           TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository) {
+                           TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository,
+                           TipoAulaRepository tipoAulaRepository) {
         this.detalhesAulaRepository = detalhesAulaRepository;
         this.disciplinaCursoRepository = disciplinaCursoRepository;
         this.aulaDocenteRepository = aulaDocenteRepository;
         this.recursoDisciplinaRepository = recursoDisciplinaRepository;
         this.alunoDisciplinaRepository = alunoDisciplinaRepository;
         this.tipoAulaDisciplinaRepository = tipoAulaDisciplinaRepository;
+        this.tipoAulaRepository = tipoAulaRepository;
     }
 
     public List<LessonDto> convert() {
@@ -50,6 +53,12 @@ public class LessonConverter {
         List<RecursoDisciplina> recursoDisciplinas = recursoDisciplinaRepository.findAll();
         List<AlunoDisciplina> alunoDisciplinas = alunoDisciplinaRepository.findAll();
         List<TipoAulaDisciplina> tipoAulaDisciplinas = tipoAulaDisciplinaRepository.findAll();
+        List<TipoAula> tipoAulas = tipoAulaRepository.findAll();
+
+        HashMap<Integer, TipoAula> tipoAulaHashMap = new HashMap<>();
+        for (TipoAula tipoAula : tipoAulas) {
+            tipoAulaHashMap.put(tipoAula.getId(), tipoAula);
+        }
 
         List<LessonDto> lessonDtos = new ArrayList<>();
         for (DetalhesAula detalhesAula : detalhesAulas) {
@@ -94,30 +103,19 @@ public class LessonConverter {
                                             + " idTipoAula: " + detalhesAula.getIdTipoAula()
                             ));
 
+                    TipoAula tipoAula = tipoAulaHashMap.get(tipoAulaDisciplina.getIdTipoAula());
+
                     lessonDto.setHoursPerWeek(tipoAulaDisciplina.getHorasSemanais());
                     lessonDto.setBlocks(tipoAulaDisciplina.getNumBlocos());
+                    lessonDto.setColor(tipoAula.getCor());
                     lessonDtos.add(lessonDto);
                 }
             }
-        }
-
-        for (int i = 0; i < lessonDtos.size(); i++) {
-            LessonDto lessonDto = lessonDtos.get(i);
-            lessonDto.setColor(generateHexColor(i, lessonDtos.size()));
         }
 
         this.lessonDtos = lessonDtos;
         this.isConverted = true;
 
         return lessonDtos;
-    }
-
-    private static String generateHexColor(int index, int totalColors) {
-        float hue = (float) index / (float) totalColors;
-        float saturation = 1.0f;
-        float lightness = 0.5f;
-
-        Color color = Color.getHSBColor(hue, saturation, lightness);
-        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }
