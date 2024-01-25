@@ -19,9 +19,8 @@ public class LessonUnitConverter {
     private final LessonConverter lessonConverter;
     private final TimeslotConverter timeslotConverter;
     private final HorarioRepository horarioRepository;
-    private static final int LESSON_UNIT_DURATION = 30;
+    private static final int DURATION = 30;
     private static final int HOUR = 60;
-
 
     @Autowired
     public LessonUnitConverter(LessonConverter lessonConverter,
@@ -44,7 +43,7 @@ public class LessonUnitConverter {
         long id = 1L;
 
         for (LessonDto lessonDto : lessonDtos) {
-            int units = (int) Math.round(lessonDto.getHoursPerWeek() * HOUR / LESSON_UNIT_DURATION);
+            int units = (int) Math.round(lessonDto.getHoursPerWeek() * HOUR / DURATION);
 
             for (int i = 0; i < units; i++) {
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
@@ -67,16 +66,16 @@ public class LessonUnitConverter {
         long id = 1L;
 
         for (LessonDto lessonDto : lessonDtos) {
-            long lessonUnits = Math.round(lessonDto.getHoursPerWeek() * HOUR / LESSON_UNIT_DURATION);
+            long lessonUnits = Math.round(lessonDto.getHoursPerWeek() * HOUR / DURATION);
             List<Horario> horariosDaDisciplina = horarios.stream().filter(h -> h.getIdAula() == lessonDto.getId()).toList();
 
             for (Horario horario : horariosDaDisciplina) {
                 Duration duration = Duration.between(horario.getInicio().toLocalTime(), horario.getFim().toLocalTime());
-                int horarioUnits = Math.round((float) duration.toMinutes() / LESSON_UNIT_DURATION);
+                int horarioUnits = Math.round((float) duration.toMinutes() / DURATION);
 
                 for (int i = 0; i < horarioUnits; i++) {
-                    LocalTime startTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) i * LESSON_UNIT_DURATION));
-                    LocalTime endTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) (i + 1) * LESSON_UNIT_DURATION));
+                    LocalTime startTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) i * DURATION));
+                    LocalTime endTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) (i + 1) * DURATION));
 
                     TimeslotDto timeslotDto = timeslotDtos.stream()
                             .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(horario.getIdDia()))
