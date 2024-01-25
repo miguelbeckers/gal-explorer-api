@@ -37,7 +37,7 @@ public class LessonUnitConverter {
     }
 
     private List<LessonUnitDto> createUntisWithoutTimeslotsAndClassroom() {
-        List<LessonDto> lessonDtos = lessonConverter.getIsConverted() ? lessonConverter.getLessonDtos() : lessonConverter.convert();
+        List<LessonDto> lessonDtos = lessonConverter.convert();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;
@@ -59,8 +59,8 @@ public class LessonUnitConverter {
     private List<LessonUnitDto> createUnitsWithTimeslotsAndClassroom() {
         List<Horario> horarios = horarioRepository.findAll();
 
-        List<LessonDto> lessonDtos = lessonConverter.getIsConverted() ? lessonConverter.getLessonDtos() : lessonConverter.convert();
-        List<TimeslotDto> timeslotDtos = timeslotConverter.getIsConverted() ? timeslotConverter.getTimeslotDtos() : timeslotConverter.convert();
+        List<LessonDto> lessonDtos = lessonConverter.convert();
+        List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;

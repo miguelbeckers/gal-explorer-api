@@ -25,8 +25,7 @@ public class HorarioConverter {
     }
 
     public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
-        List<TimeslotDto> timeslotDtos = timeslotConverter.getIsConverted()
-                ? timeslotConverter.getTimeslotDtos() : timeslotConverter.convert();
+        List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
 
         HashMap<Long, TimeslotDto> timeslotDtoHashMap = new HashMap<>();
         for (TimeslotDto timeslotDto : timeslotDtos) {
