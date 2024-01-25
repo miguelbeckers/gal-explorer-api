@@ -51,10 +51,10 @@ public class HorarioConverter {
             }
         }
 
-        horarios.sort(Comparator.comparing(Horario::getInicio));
-        horarios.sort(Comparator.comparing(Horario::getIdDia));
-        horarios.sort(Comparator.comparing(Horario::getIdSala));
-        horarios.sort(Comparator.comparing(Horario::getIdAula));
+        horarios.sort(Comparator.comparing(Horario::getIdDia)
+                .thenComparing(Horario::getIdSala)
+                .thenComparing(Horario::getIdAula)
+                .thenComparing(Horario::getInicio));
 
         int i = 0;
 
