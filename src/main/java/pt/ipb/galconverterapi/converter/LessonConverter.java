@@ -100,6 +100,13 @@ public class LessonConverter {
             }
         }
 
+        String[] hexColors = { "#ff0000", "#00ff00", "#0000ff" };
+
+        for (int i = 0; i < lessonDtos.size(); i++) {
+            LessonDto lessonDto = lessonDtos.get(i);
+            lessonDto.setColor(hexColors[i % hexColors.length]);
+        }
+
         this.lessonDtos = lessonDtos;
         this.isConverted = true;
 
