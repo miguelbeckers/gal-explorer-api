@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PeriodConverter {
+public class PeriodMapper {
     private final AnoRepository anoRepository;
 
     @Autowired
-    public PeriodConverter(AnoRepository anoRepository) {
+    public PeriodMapper(AnoRepository anoRepository) {
         this.anoRepository = anoRepository;
     }
 

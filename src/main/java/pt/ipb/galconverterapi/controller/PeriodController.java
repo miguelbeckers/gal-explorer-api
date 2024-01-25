@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.PeriodConverter;
+import pt.ipb.galconverterapi.mapper.PeriodMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/periods")
 public class PeriodController {
-    private final PeriodConverter periodConverter;
+    private final PeriodMapper periodMapper;
 
     @Autowired
-    public PeriodController(PeriodConverter periodConverter) {
-        this.periodConverter = periodConverter;
+    public PeriodController(PeriodMapper periodMapper) {
+        this.periodMapper = periodMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getPeriods() {
-        return ResponseEntity.ok().body(periodConverter.convert());
+        return ResponseEntity.ok().body(periodMapper.convert());
     }
 }

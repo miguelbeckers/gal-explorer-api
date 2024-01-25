@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component
-public class StudentConverter {
+public class StudentMapper {
     private final AlunoDisciplinaRepository alunoDisciplinaRepository;
     private final DisciplinaCursoRepository disciplinaCursoRepository;
 
     @Autowired
-    public StudentConverter(AlunoDisciplinaRepository alunoDisciplinaRepository,
-                            DisciplinaCursoRepository disciplinaCursoRepository) {
+    public StudentMapper(AlunoDisciplinaRepository alunoDisciplinaRepository,
+                         DisciplinaCursoRepository disciplinaCursoRepository) {
         this.alunoDisciplinaRepository = alunoDisciplinaRepository;
         this.disciplinaCursoRepository = disciplinaCursoRepository;
     }

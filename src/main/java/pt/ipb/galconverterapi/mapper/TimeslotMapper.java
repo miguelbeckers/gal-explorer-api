@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TimeslotConverter {
+public class TimeslotMapper {
     private final TempoRepository tempoRepository;
     private final DiaRepository diaRepository;
 
     @Autowired
-    public TimeslotConverter(TempoRepository tempoRepository, DiaRepository diaRepository) {
+    public TimeslotMapper(TempoRepository tempoRepository, DiaRepository diaRepository) {
         this.tempoRepository = tempoRepository;
         this.diaRepository = diaRepository;
     }

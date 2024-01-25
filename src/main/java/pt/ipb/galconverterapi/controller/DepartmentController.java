@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.DepartmentConverter;
+import pt.ipb.galconverterapi.mapper.DepartmentMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/departments")
 public class DepartmentController {
-    private final DepartmentConverter departmentConverter;
+    private final DepartmentMapper departmentMapper;
 
     @Autowired
-    public DepartmentController(DepartmentConverter departmentConverter) {
-        this.departmentConverter = departmentConverter;
+    public DepartmentController(DepartmentMapper departmentMapper) {
+        this.departmentMapper = departmentMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getDepartments() {
-        return ResponseEntity.ok().body(departmentConverter.convert());
+        return ResponseEntity.ok().body(departmentMapper.convert());
     }
 }

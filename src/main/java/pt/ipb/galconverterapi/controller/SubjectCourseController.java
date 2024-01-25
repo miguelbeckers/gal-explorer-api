@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.SubjectCourseConverter;
+import pt.ipb.galconverterapi.mapper.SubjectCourseMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/subject-courses")
 public class SubjectCourseController {
-    private final SubjectCourseConverter subjectCourseConverter;
+    private final SubjectCourseMapper subjectCourseMapper;
 
     @Autowired
-    public SubjectCourseController(SubjectCourseConverter subjectCourseConverter) {
-        this.subjectCourseConverter = subjectCourseConverter;
+    public SubjectCourseController(SubjectCourseMapper subjectCourseMapper) {
+        this.subjectCourseMapper = subjectCourseMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getSubjectCourses() {
-        return ResponseEntity.ok().body(subjectCourseConverter.convert());
+        return ResponseEntity.ok().body(subjectCourseMapper.convert());
     }
 }

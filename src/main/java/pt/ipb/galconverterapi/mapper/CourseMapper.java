@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,27 +15,27 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component
-public class CourseConverter {
+public class CourseMapper {
     private final CursoRepository cursoRepository;
     private final DisciplinaCursoRepository disciplinaCursoRepository;
     private final DisciplinaRepository disciplinaRepository;
     private final IndisponibilidadeRepository indisponibilidadeRepository;
     private final AnoCursoRepository anoCursoRepository;
-    private final TimeslotConverter timeslotConverter;
+    private final TimeslotMapper timeslotMapper;
 
     @Autowired
-    public CourseConverter(CursoRepository cursoRepository,
-                           DisciplinaCursoRepository disciplinaCursoRepository,
-                           DisciplinaRepository disciplinaRepository,
-                           IndisponibilidadeRepository indisponibilidadeRepository,
-                           AnoCursoRepository anoCursoRepository,
-                           TimeslotConverter timeslotConverter) {
+    public CourseMapper(CursoRepository cursoRepository,
+                        DisciplinaCursoRepository disciplinaCursoRepository,
+                        DisciplinaRepository disciplinaRepository,
+                        IndisponibilidadeRepository indisponibilidadeRepository,
+                        AnoCursoRepository anoCursoRepository,
+                        TimeslotMapper timeslotMapper) {
         this.cursoRepository = cursoRepository;
         this.disciplinaCursoRepository = disciplinaCursoRepository;
         this.disciplinaRepository = disciplinaRepository;
         this.indisponibilidadeRepository = indisponibilidadeRepository;
         this.anoCursoRepository = anoCursoRepository;
-        this.timeslotConverter = timeslotConverter;
+        this.timeslotMapper = timeslotMapper;
     }
 
     public List<CourseDto> convert() {
@@ -79,7 +79,7 @@ public class CourseConverter {
                 }
             }
 
-            List<TimeslotDto> courseUnavailability = timeslotConverter.convert(indisponibilidadesCurso);
+            List<TimeslotDto> courseUnavailability = timeslotMapper.convert(indisponibilidadesCurso);
             courseDto.setUnavailabilityIds(courseUnavailability.stream().map(TimeslotDto::getId).toList());
 
             List<Long> anoCursosCurso = anoCursos.stream()

@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,20 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class LessonUnitConverter {
-    private final LessonConverter lessonConverter;
-    private final TimeslotConverter timeslotConverter;
+public class LessonUnitMapper {
+    private final LessonMapper lessonMapper;
+    private final TimeslotMapper timeslotMapper;
     private final HorarioRepository horarioRepository;
     private static final int DURATION = 30;
     private static final int HOUR = 60;
 
     @Autowired
-    public LessonUnitConverter(LessonConverter lessonConverter,
-                               HorarioRepository horarioRepository,
-                               TimeslotConverter timeslotConverter) {
-        this.lessonConverter = lessonConverter;
+    public LessonUnitMapper(LessonMapper lessonMapper,
+                            HorarioRepository horarioRepository,
+                            TimeslotMapper timeslotMapper) {
+        this.lessonMapper = lessonMapper;
         this.horarioRepository = horarioRepository;
-        this.timeslotConverter = timeslotConverter;
+        this.timeslotMapper = timeslotMapper;
     }
 
     public List<LessonUnitDto> convert() {
@@ -37,7 +37,7 @@ public class LessonUnitConverter {
     }
 
     private List<LessonUnitDto> createUntisWithoutTimeslotsAndClassroom() {
-        List<LessonDto> lessonDtos = lessonConverter.convert();
+        List<LessonDto> lessonDtos = lessonMapper.convert();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;
@@ -59,8 +59,8 @@ public class LessonUnitConverter {
     private List<LessonUnitDto> createUnitsWithTimeslotsAndClassroom() {
         List<Horario> horarios = horarioRepository.findAll();
 
-        List<LessonDto> lessonDtos = lessonConverter.convert();
-        List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
+        List<LessonDto> lessonDtos = lessonMapper.convert();
+        List<TimeslotDto> timeslotDtos = timeslotMapper.convert();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;

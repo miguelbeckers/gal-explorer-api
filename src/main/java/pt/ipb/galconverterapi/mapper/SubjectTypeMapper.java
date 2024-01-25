@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class SubjectTypeConverter {
+public class SubjectTypeMapper {
     private final TipoAulaRepository tipoAulaRepository;
 
     @Autowired
-    public SubjectTypeConverter(TipoAulaRepository tipoAulaRepository) {
+    public SubjectTypeMapper(TipoAulaRepository tipoAulaRepository) {
         this.tipoAulaRepository = tipoAulaRepository;
     }
 

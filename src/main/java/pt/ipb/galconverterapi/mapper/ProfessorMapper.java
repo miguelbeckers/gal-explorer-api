@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProfessorConverter {
+public class ProfessorMapper {
     private final DocenteRepository docenteRepository;
     private final IndisponibilidadeRepository indisponibilidadeRepository;
-    private final TimeslotConverter timeslotConverter;
+    private final TimeslotMapper timeslotMapper;
 
     @Autowired
-    public ProfessorConverter(
+    public ProfessorMapper(
             DocenteRepository docenteRepository,
             IndisponibilidadeRepository indisponibilidadeRepository,
-            TimeslotConverter timeslotConverter) {
+            TimeslotMapper timeslotMapper) {
         this.docenteRepository = docenteRepository;
         this.indisponibilidadeRepository = indisponibilidadeRepository;
-        this.timeslotConverter = timeslotConverter;
+        this.timeslotMapper = timeslotMapper;
     }
 
     public List<ProfessorDto> convert() {
@@ -50,7 +50,7 @@ public class ProfessorConverter {
                 }
             }
 
-            List<TimeslotDto> professorUnavailability = timeslotConverter.convert(indisponibilidadesProfessor);
+            List<TimeslotDto> professorUnavailability = timeslotMapper.convert(indisponibilidadesProfessor);
             professorDto.setUnavailabilityIds(professorUnavailability.stream().map(TimeslotDto::getId).toList());
 
             professorDtos.add(professorDto);

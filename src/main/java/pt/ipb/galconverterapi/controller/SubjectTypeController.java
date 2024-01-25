@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.SubjectTypeConverter;
+import pt.ipb.galconverterapi.mapper.SubjectTypeMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/subject-types")
 public class SubjectTypeController {
-    private final SubjectTypeConverter subjectTypeConverter;
+    private final SubjectTypeMapper subjectTypeMapper;
 
     @Autowired
-    public SubjectTypeController(SubjectTypeConverter subjectTypeConverter) {
-        this.subjectTypeConverter = subjectTypeConverter;
+    public SubjectTypeController(SubjectTypeMapper subjectTypeMapper) {
+        this.subjectTypeMapper = subjectTypeMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getSubjectTypes() {
-        return ResponseEntity.ok().body(subjectTypeConverter.convert());
+        return ResponseEntity.ok().body(subjectTypeMapper.convert());
     }
 }

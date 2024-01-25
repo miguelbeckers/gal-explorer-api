@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.ProfessorConverter;
+import pt.ipb.galconverterapi.mapper.ProfessorMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/professors")
 public class ProfessorController {
-    private final ProfessorConverter professorConverter;
+    private final ProfessorMapper professorMapper;
 
     @Autowired
-    public ProfessorController(ProfessorConverter professorConverter) {
-        this.professorConverter = professorConverter;
+    public ProfessorController(ProfessorMapper professorMapper) {
+        this.professorMapper = professorMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getProfessors() {
-        return ResponseEntity.ok().body(professorConverter.convert());
+        return ResponseEntity.ok().body(professorMapper.convert());
     }
 }

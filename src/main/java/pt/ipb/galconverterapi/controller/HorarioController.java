@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.HorarioConverter;
+import pt.ipb.galconverterapi.mapper.HorarioMapper;
 import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.model.Horario;
 
@@ -18,16 +18,16 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/horarios")
 public class HorarioController {
-    private final HorarioConverter horarioConverter;
+    private final HorarioMapper horarioMapper;
 
     @Autowired
-    public HorarioController(HorarioConverter horarioConverter) {
-        this.horarioConverter = horarioConverter;
+    public HorarioController(HorarioMapper horarioMapper) {
+        this.horarioMapper = horarioMapper;
     }
 
     @PostMapping
     public ResponseEntity<Object> postLessonUnits(@RequestBody List<LessonUnitDto> lessonUnitDtos) {
-        List<Horario> horarios = horarioConverter.convert(lessonUnitDtos);
+        List<Horario> horarios = horarioMapper.convert(lessonUnitDtos);
         return ResponseEntity.status(HttpStatus.CREATED).body(horarios);
     }
 }

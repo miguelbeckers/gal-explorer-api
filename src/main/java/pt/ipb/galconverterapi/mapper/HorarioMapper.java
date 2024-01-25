@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,19 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 
 @Component
-public class HorarioConverter {
+public class HorarioMapper {
     private final HorarioRepository horarioRepository;
-    private final TimeslotConverter timeslotConverter;
+    private final TimeslotMapper timeslotMapper;
 
     @Autowired
-    public HorarioConverter(HorarioRepository horarioRepository,
-                            TimeslotConverter timeslotConverter) {
+    public HorarioMapper(HorarioRepository horarioRepository,
+                         TimeslotMapper timeslotMapper) {
         this.horarioRepository = horarioRepository;
-        this.timeslotConverter = timeslotConverter;
+        this.timeslotMapper = timeslotMapper;
     }
 
     public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
-        List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
+        List<TimeslotDto> timeslotDtos = timeslotMapper.convert();
 
         HashMap<Long, TimeslotDto> timeslotDtoHashMap = new HashMap<>();
         for (TimeslotDto timeslotDto : timeslotDtos) {

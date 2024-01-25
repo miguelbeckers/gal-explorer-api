@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ResourceConverter {
+public class ResourceMapper {
     private final RecursoRepository recursoRepository;
 
     @Autowired
-    public ResourceConverter(RecursoRepository recursoRepository) {
+    public ResourceMapper(RecursoRepository recursoRepository) {
         this.recursoRepository = recursoRepository;
     }
 

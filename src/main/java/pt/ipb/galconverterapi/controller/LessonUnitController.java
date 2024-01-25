@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.LessonUnitConverter;
+import pt.ipb.galconverterapi.mapper.LessonUnitMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/lesson-units")
 public class LessonUnitController {
-    private final LessonUnitConverter lessonUnitConverter;
+    private final LessonUnitMapper lessonUnitMapper;
 
     @Autowired
-    public LessonUnitController(LessonUnitConverter lessonUnitConverter) {
-        this.lessonUnitConverter = lessonUnitConverter;
+    public LessonUnitController(LessonUnitMapper lessonUnitMapper) {
+        this.lessonUnitMapper = lessonUnitMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getLessonUnits() {
-        return ResponseEntity.ok().body(lessonUnitConverter.convert());
+        return ResponseEntity.ok().body(lessonUnitMapper.convert());
     }
 }

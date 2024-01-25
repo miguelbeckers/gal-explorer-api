@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.ClassroomResourceConverter;
+import pt.ipb.galconverterapi.mapper.ClassroomResourceMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/classroom-resources")
 public class ClassroomResourceController {
-    private final ClassroomResourceConverter classroomResourceConverter;
+    private final ClassroomResourceMapper classroomResourceMapper;
 
     @Autowired
-    public ClassroomResourceController(ClassroomResourceConverter classroomResourceConverter) {
-        this.classroomResourceConverter = classroomResourceConverter;
+    public ClassroomResourceController(ClassroomResourceMapper classroomResourceMapper) {
+        this.classroomResourceMapper = classroomResourceMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getClassroomResources() {
-        return ResponseEntity.ok().body(classroomResourceConverter.convert());
+        return ResponseEntity.ok().body(classroomResourceMapper.convert());
     }
 }

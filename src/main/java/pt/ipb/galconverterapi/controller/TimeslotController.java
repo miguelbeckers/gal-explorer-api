@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pt.ipb.galconverterapi.converter.TimeslotConverter;
+import pt.ipb.galconverterapi.mapper.TimeslotMapper;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/timeslots")
 public class TimeslotController {
-    private final TimeslotConverter timeslotConverter;
+    private final TimeslotMapper timeslotMapper;
 
     @Autowired
-    public TimeslotController(TimeslotConverter timeslotConverter) {
-        this.timeslotConverter = timeslotConverter;
+    public TimeslotController(TimeslotMapper timeslotMapper) {
+        this.timeslotMapper = timeslotMapper;
     }
 
     @GetMapping
     public ResponseEntity<Object> getTimeslots() {
-        return ResponseEntity.ok().body(timeslotConverter.convert());
+        return ResponseEntity.ok().body(timeslotMapper.convert());
     }
 }

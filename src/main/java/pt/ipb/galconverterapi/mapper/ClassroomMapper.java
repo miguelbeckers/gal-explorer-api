@@ -1,4 +1,4 @@
-package pt.ipb.galconverterapi.converter;
+package pt.ipb.galconverterapi.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ClassroomConverter {
+public class ClassroomMapper {
     private final SalaRepository salaRepository;
     private final RecursoSalaRepository recursoSalaRepository;
     private final IndisponibilidadeRepository indisponibilidadeRepository;
     private final TipoSalaRepository tipoSalaRepository;
-    private final TimeslotConverter timeslotConverter;
+    private final TimeslotMapper timeslotMapper;
 
     @Autowired
-    public ClassroomConverter(SalaRepository salaRepository,
-                              RecursoSalaRepository recursoSalaRepository,
-                              IndisponibilidadeRepository indisponibilidadeRepository,
-                              TipoSalaRepository tipoSalaRepository,
-                              TimeslotConverter timeslotConverter) {
+    public ClassroomMapper(SalaRepository salaRepository,
+                           RecursoSalaRepository recursoSalaRepository,
+                           IndisponibilidadeRepository indisponibilidadeRepository,
+                           TipoSalaRepository tipoSalaRepository,
+                           TimeslotMapper timeslotMapper) {
         this.salaRepository = salaRepository;
         this.recursoSalaRepository = recursoSalaRepository;
         this.indisponibilidadeRepository = indisponibilidadeRepository;
         this.tipoSalaRepository = tipoSalaRepository;
-        this.timeslotConverter = timeslotConverter;
+        this.timeslotMapper = timeslotMapper;
     }
 
     public List<ClassroomDto> convert() {
@@ -62,7 +62,7 @@ public class ClassroomConverter {
                 }
             }
 
-            List<TimeslotDto> professorUnavailability = timeslotConverter.convert(indisponibilidadesSala);
+            List<TimeslotDto> professorUnavailability = timeslotMapper.convert(indisponibilidadesSala);
             classroomDto.setUnavailability(professorUnavailability.stream().map(TimeslotDto::getId).toList());
 
             classroomDto.setClassroomResources(recursoSalas.stream()
