@@ -1,17 +1,11 @@
 package pt.ipb.galconverterapi.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 import pt.ipb.galconverterapi.dto.LessonUnitDto;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
-import pt.ipb.galconverterapi.model.Dia;
 import pt.ipb.galconverterapi.model.Horario;
-import pt.ipb.galconverterapi.model.Tempo;
-import pt.ipb.galconverterapi.repository.DiaRepository;
 import pt.ipb.galconverterapi.repository.HorarioRepository;
-import pt.ipb.galconverterapi.repository.TempoRepository;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -21,59 +15,38 @@ import java.util.List;
 @Component
 public class HorarioConverter {
     private final HorarioRepository horarioRepository;
-    private final DiaRepository diaRepository;
-    private final TempoRepository tempoRepository;
     private final TimeslotConverter timeslotConverter;
 
     @Autowired
     public HorarioConverter(HorarioRepository horarioRepository,
-                            DiaRepository diaRepository,
-                            TempoRepository tempoRepository,
                             TimeslotConverter timeslotConverter) {
         this.horarioRepository = horarioRepository;
-        this.diaRepository = diaRepository;
-        this.tempoRepository = tempoRepository;
         this.timeslotConverter = timeslotConverter;
     }
 
     public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
-        List<TimeslotDto> timeslotDtos = timeslotConverter.convert();
-        List<Dia> dias = diaRepository.findAll();
-        List<Tempo> tempos = tempoRepository.findAll();
+        List<TimeslotDto> timeslotDtos = timeslotConverter.getIsConverted()
+                ? timeslotConverter.getTimeslotDtos() : timeslotConverter.convert();
 
-        HashMap<Long, TimeslotDto> timeslotMap = new HashMap<>();
+        HashMap<Long, TimeslotDto> timeslotDtoHashMap = new HashMap<>();
         for (TimeslotDto timeslotDto : timeslotDtos) {
-            timeslotMap.put(timeslotDto.getId(), timeslotDto);
+            timeslotDtoHashMap.put(timeslotDto.getId(), timeslotDto);
         }
 
         List<Horario> horarios = new ArrayList<>();
 
-        // TODO: identify sequence of timeslots to merge them into a single horario
         for (LessonUnitDto lessonDto : lessonUntiDtos) {
-            TimeslotDto timeslotDto = timeslotMap.get(lessonDto.getId());
+            if (lessonDto.getTimeslotId() != null && lessonDto.getLessonId() != null) {
+                TimeslotDto timeslotDto = timeslotDtoHashMap.get(lessonDto.getTimeslotId());
 
-            Dia dia = dias.stream()
-                    .filter(d -> d.getWeekday() == timeslotDto.getDayOfWeek().getValue())
-                    .findFirst()
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Dia not found: " + timeslotDto.getDayOfWeek().getValue()));
-
-            Time inicio = Time.valueOf(timeslotDto.getStartTime());
-            Time fim = Time.valueOf(timeslotDto.getEndTime());
-
-            Tempo tempo = tempos.stream()
-                    .filter(t -> t.getInicio().equals(inicio) && t.getFim().equals(fim))
-                    .findFirst()
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                            "Tempo not found: " + timeslotDto.getStartTime() + " - " + timeslotDto.getEndTime()));
-
-            Horario horario = new Horario();
-            horario.setId(timeslotDto.getId().intValue());
-            horario.setIdDia(dia.getId());
-            horario.setInicio(tempo.getInicio());
-            horario.setFim(tempo.getFim());
-            horario.setIdSala(lessonDto.getClassroomId().intValue());
-            horarios.add(horario);
+                Horario horario = new Horario();
+                horario.setIdSala(lessonDto.getClassroomId().intValue());
+                horario.setInicio(Time.valueOf(timeslotDto.getStartTime()));
+                horario.setFim(Time.valueOf(timeslotDto.getEndTime()));
+                horario.setIdDia(timeslotDto.getDayOfWeek().getValue());
+                horario.setIdAula(lessonDto.getLessonId().intValue());
+                horarios.add(horario);
+            }
         }
 
         horarioRepository.deleteAll();
