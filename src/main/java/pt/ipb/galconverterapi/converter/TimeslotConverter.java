@@ -1,5 +1,6 @@
 package pt.ipb.galconverterapi.converter;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pt.ipb.galconverterapi.dto.TimeslotDto;
@@ -17,8 +18,12 @@ import java.util.List;
 public class TimeslotConverter {
     private final TempoRepository tempoRepository;
     private final DiaRepository diaRepository;
-    private List<TimeslotDto> timeslotDtos = new ArrayList<>();
-    private Boolean converted = false;
+
+    @Getter
+    private List<TimeslotDto> timeslotDtos;
+
+    @Getter
+    private Boolean isConverted = false;
 
     @Autowired
     public TimeslotConverter(TempoRepository tempoRepository, DiaRepository diaRepository) {
@@ -45,13 +50,12 @@ public class TimeslotConverter {
         }
 
         this.timeslotDtos = timeslotDtos;
-        converted = true;
+        isConverted = true;
 
         return timeslotDtos;
     }
 
     public List<TimeslotDto> convert(List<Object[]> indisponibilidades) {
-        if (!converted) convert();
         List<TimeslotDto> unavailability = new ArrayList<>();
 
         for (Object[] indisponibilidade : indisponibilidades) {

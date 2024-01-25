@@ -1,5 +1,6 @@
 package pt.ipb.galconverterapi.converter;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,12 @@ public class LessonConverter {
     private final RecursoDisciplinaRepository recursoDisciplinaRepository;
     private final AlunoDisciplinaRepository alunoDisciplinaRepository;
     private final TipoAulaDisciplinaRepository tipoAulaDisciplinaRepository;
+
+    @Getter
+    private List<LessonDto> lessonDtos = new ArrayList<>();
+
+    @Getter
+    private Boolean isConverted = false;
 
     @Autowired
     public LessonConverter(DetalhesAulaRepository detalhesAulaRepository,
@@ -92,6 +99,9 @@ public class LessonConverter {
                 }
             }
         }
+
+        this.lessonDtos = lessonDtos;
+        this.isConverted = true;
 
         return lessonDtos;
     }
