@@ -9,6 +9,7 @@ import pt.ipb.galconverterapi.dto.LessonDto;
 import pt.ipb.galconverterapi.model.*;
 import pt.ipb.galconverterapi.repository.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,16 +101,23 @@ public class LessonConverter {
             }
         }
 
-        String[] hexColors = { "#ff0000", "#00ff00", "#0000ff" };
-
         for (int i = 0; i < lessonDtos.size(); i++) {
             LessonDto lessonDto = lessonDtos.get(i);
-            lessonDto.setColor(hexColors[i % hexColors.length]);
+            lessonDto.setColor(generateHexColor(i, lessonDtos.size()));
         }
 
         this.lessonDtos = lessonDtos;
         this.isConverted = true;
 
         return lessonDtos;
+    }
+
+    private static String generateHexColor(int index, int totalColors) {
+        float hue = (float) index / (float) totalColors;
+        float saturation = 1.0f;
+        float lightness = 0.5f;
+
+        Color color = Color.getHSBColor(hue, saturation, lightness);
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }
