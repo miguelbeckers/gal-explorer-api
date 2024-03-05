@@ -27,7 +27,7 @@ public class ProfessorMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<ProfessorDto> convert() {
+    public List<ProfessorDto> map() {
         List<Docente> docentes = docenteRepository.findAll();
         List<Object[]> indisponibilidades = indisponibilidadeRepository.findAllByQueryAsObjects();
 
@@ -50,7 +50,7 @@ public class ProfessorMapper {
                 }
             }
 
-            List<TimeslotDto> professorUnavailability = timeslotMapper.convert(indisponibilidadesProfessor);
+            List<TimeslotDto> professorUnavailability = timeslotMapper.map(indisponibilidadesProfessor);
             professorDto.setUnavailabilityIds(professorUnavailability.stream().map(TimeslotDto::getId).toList());
 
             professorDtos.add(professorDto);

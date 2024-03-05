@@ -38,7 +38,7 @@ public class CourseMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<CourseDto> convert() {
+    public List<CourseDto> map() {
         List<Curso> cursos = cursoRepository.findAll();
         List<CourseDto> courseDtos = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class CourseMapper {
                 }
             }
 
-            List<TimeslotDto> courseUnavailability = timeslotMapper.convert(indisponibilidadesCurso);
+            List<TimeslotDto> courseUnavailability = timeslotMapper.map(indisponibilidadesCurso);
             courseDto.setUnavailabilityIds(courseUnavailability.stream().map(TimeslotDto::getId).toList());
 
             List<Long> anoCursosCurso = anoCursos.stream()

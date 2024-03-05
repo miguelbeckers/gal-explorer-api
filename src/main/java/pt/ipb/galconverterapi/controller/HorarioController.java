@@ -27,7 +27,7 @@ public class HorarioController {
 
     @PostMapping
     public ResponseEntity<Object> postLessonUnits(@RequestBody List<LessonUnitDto> lessonUnitDtos) {
-        List<Horario> horarios = horarioMapper.convert(lessonUnitDtos);
+        List<Horario> horarios = horarioMapper.map(lessonUnitDtos);
         return ResponseEntity.status(HttpStatus.CREATED).body(horarios);
     }
 }

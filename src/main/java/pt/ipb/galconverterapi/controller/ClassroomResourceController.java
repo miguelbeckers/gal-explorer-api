@@ -21,6 +21,6 @@ public class ClassroomResourceController {
 
     @GetMapping
     public ResponseEntity<Object> getClassroomResources() {
-        return ResponseEntity.ok().body(classroomResourceMapper.convert());
+        return ResponseEntity.ok().body(classroomResourceMapper.map());
     }
 }

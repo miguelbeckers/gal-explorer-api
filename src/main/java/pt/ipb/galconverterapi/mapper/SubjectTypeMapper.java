@@ -18,7 +18,7 @@ public class SubjectTypeMapper {
         this.tipoAulaRepository = tipoAulaRepository;
     }
 
-    public List<SubjectTypeDto> convert() {
+    public List<SubjectTypeDto> map() {
         List<TipoAula> tipoAulas = tipoAulaRepository.findAll();
         List<SubjectTypeDto> subjectTypeDtos = new ArrayList<>();
 

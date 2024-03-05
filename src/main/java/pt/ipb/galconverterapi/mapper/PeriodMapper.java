@@ -19,7 +19,7 @@ public class PeriodMapper {
         this.anoRepository = anoRepository;
     }
 
-    public List<PeriodDto> convert() {
+    public List<PeriodDto> map() {
         List<Ano> anos = anoRepository.findAll();
         List<PeriodDto> periodDtos = new ArrayList<>();
 

@@ -18,7 +18,7 @@ public class DepartmentMapper {
         this.departamentoRepository = departamentoRepository;
     }
 
-    public List<DepartmentDto> convert() {
+    public List<DepartmentDto> map() {
         List<Departamento> departamentos = departamentoRepository.findAll();
         List<DepartmentDto> departmentDtos = new ArrayList<>();
 

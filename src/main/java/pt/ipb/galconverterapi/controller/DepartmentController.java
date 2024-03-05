@@ -21,6 +21,6 @@ public class DepartmentController {
 
     @GetMapping
     public ResponseEntity<Object> getDepartments() {
-        return ResponseEntity.ok().body(departmentMapper.convert());
+        return ResponseEntity.ok().body(departmentMapper.map());
     }
 }

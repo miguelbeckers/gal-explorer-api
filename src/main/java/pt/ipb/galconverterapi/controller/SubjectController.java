@@ -21,6 +21,6 @@ public class SubjectController {
 
     @GetMapping
     public ResponseEntity<Object> getSubjects() {
-        return ResponseEntity.ok().body(subjectMapper.convert());
+        return ResponseEntity.ok().body(subjectMapper.map());
     }
 }

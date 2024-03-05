@@ -21,6 +21,6 @@ public class PeriodController {
 
     @GetMapping
     public ResponseEntity<Object> getPeriods() {
-        return ResponseEntity.ok().body(periodMapper.convert());
+        return ResponseEntity.ok().body(periodMapper.map());
     }
 }

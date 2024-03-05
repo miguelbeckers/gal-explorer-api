@@ -38,7 +38,7 @@ public class ClassroomMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<ClassroomDto> convert() {
+    public List<ClassroomDto> map() {
         List<Sala> salas = salaRepository.findAll();
         List<RecursoSala> recursoSalas = recursoSalaRepository.findAll();
         List<TipoSala> tipoSalas = tipoSalaRepository.findAll();
@@ -62,8 +62,8 @@ public class ClassroomMapper {
                 }
             }
 
-            List<TimeslotDto> professorUnavailability = timeslotMapper.convert(indisponibilidadesSala);
-            classroomDto.setUnavailability(professorUnavailability.stream().map(TimeslotDto::getId).toList());
+            List<TimeslotDto> salaUnavailability = timeslotMapper.map(indisponibilidadesSala);
+            classroomDto.setUnavailability(salaUnavailability.stream().map(TimeslotDto::getId).toList());
 
             classroomDto.setClassroomResources(recursoSalas.stream()
                     .filter(recursoSala -> recursoSala.getIdSala() == sala.getId())

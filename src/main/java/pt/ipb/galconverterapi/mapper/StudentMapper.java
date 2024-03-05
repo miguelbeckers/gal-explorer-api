@@ -26,7 +26,7 @@ public class StudentMapper {
         this.disciplinaCursoRepository = disciplinaCursoRepository;
     }
 
-    public List<StudentDto> convert() {
+    public List<StudentDto> map() {
         return getStudentsWithoutSubjectCourses();
 //        return getStudentsWithSubjectCourses();
     }

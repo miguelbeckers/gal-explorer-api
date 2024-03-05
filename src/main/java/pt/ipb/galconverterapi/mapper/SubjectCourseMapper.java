@@ -18,7 +18,7 @@ public class SubjectCourseMapper {
         this.disciplinaCursoRepository = disciplinaCursoRepository;
     }
 
-    public List<SubjectCourseDto> convert() {
+    public List<SubjectCourseDto> map() {
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();
         List<SubjectCourseDto> subjectCoursDtos = new ArrayList<>();
 

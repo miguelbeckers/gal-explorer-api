@@ -21,6 +21,6 @@ public class ProfessorController {
 
     @GetMapping
     public ResponseEntity<Object> getProfessors() {
-        return ResponseEntity.ok().body(professorMapper.convert());
+        return ResponseEntity.ok().body(professorMapper.map());
     }
 }

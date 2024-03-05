@@ -21,6 +21,6 @@ public class TimeslotController {
 
     @GetMapping
     public ResponseEntity<Object> getTimeslots() {
-        return ResponseEntity.ok().body(timeslotMapper.convert());
+        return ResponseEntity.ok().body(timeslotMapper.map());
     }
 }

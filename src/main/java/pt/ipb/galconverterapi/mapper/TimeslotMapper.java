@@ -24,7 +24,7 @@ public class TimeslotMapper {
         this.diaRepository = diaRepository;
     }
 
-    public List<TimeslotDto> convert() {
+    public List<TimeslotDto> map() {
         List<Tempo> tempos = tempoRepository.findAll();
         List<Dia> dias = diaRepository.findAll();
 
@@ -45,8 +45,8 @@ public class TimeslotMapper {
         return timeslotDtos;
     }
 
-    public List<TimeslotDto> convert(List<Object[]> indisponibilidades) {
-        List<TimeslotDto> timeslotDtos = convert();
+    public List<TimeslotDto> map(List<Object[]> indisponibilidades) {
+        List<TimeslotDto> timeslotDtos = map();
         List<TimeslotDto> unavailability = new ArrayList<>();
 
         for (Object[] indisponibilidade : indisponibilidades) {

@@ -18,7 +18,7 @@ public class ResourceMapper {
         this.recursoRepository = recursoRepository;
     }
 
-    public List<ResourceDto> convert() {
+    public List<ResourceDto> map() {
         List<Recurso> recursos = recursoRepository.findAll();
         List<ResourceDto> resourceDtos = new ArrayList<>();
 

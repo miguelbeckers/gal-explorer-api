@@ -31,13 +31,13 @@ public class LessonUnitMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<LessonUnitDto> convert() {
+    public List<LessonUnitDto> map() {
         return createUnitsWithTimeslotsAndClassroom();
 //        return createUntisWithoutTimeslotsAndClassroom();
     }
 
     private List<LessonUnitDto> createUntisWithoutTimeslotsAndClassroom() {
-        List<LessonDto> lessonDtos = lessonMapper.convert();
+        List<LessonDto> lessonDtos = lessonMapper.map();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;
@@ -59,8 +59,8 @@ public class LessonUnitMapper {
     private List<LessonUnitDto> createUnitsWithTimeslotsAndClassroom() {
         List<Horario> horarios = horarioRepository.findAll();
 
-        List<LessonDto> lessonDtos = lessonMapper.convert();
-        List<TimeslotDto> timeslotDtos = timeslotMapper.convert();
+        List<LessonDto> lessonDtos = lessonMapper.map();
+        List<TimeslotDto> timeslotDtos = timeslotMapper.map();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;

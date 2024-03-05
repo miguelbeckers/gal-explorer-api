@@ -39,7 +39,7 @@ public class LessonMapper {
         this.tipoAulaRepository = tipoAulaRepository;
     }
 
-    public List<LessonDto> convert() {
+    public List<LessonDto> map() {
         List<DetalhesAula> detalhesAulas = detalhesAulaRepository.findAll();
         List<AulaDocente> aulaDocentes = aulaDocenteRepository.findAll();
         List<DisciplinaCurso> disciplinaCursos = disciplinaCursoRepository.findAll();

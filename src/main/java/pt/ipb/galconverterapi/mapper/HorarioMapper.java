@@ -25,8 +25,8 @@ public class HorarioMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<Horario> convert(List<LessonUnitDto> lessonUntiDtos) {
-        List<TimeslotDto> timeslotDtos = timeslotMapper.convert();
+    public List<Horario> map(List<LessonUnitDto> lessonUntiDtos) {
+        List<TimeslotDto> timeslotDtos = timeslotMapper.map();
 
         HashMap<Long, TimeslotDto> timeslotDtoHashMap = new HashMap<>();
         for (TimeslotDto timeslotDto : timeslotDtos) {

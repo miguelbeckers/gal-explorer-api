@@ -21,6 +21,6 @@ public class LessonUnitController {
 
     @GetMapping
     public ResponseEntity<Object> getLessonUnits() {
-        return ResponseEntity.ok().body(lessonUnitMapper.convert());
+        return ResponseEntity.ok().body(lessonUnitMapper.map());
     }
 }
