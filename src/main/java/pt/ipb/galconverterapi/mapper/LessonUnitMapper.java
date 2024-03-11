@@ -49,7 +49,7 @@ public class LessonUnitMapper {
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
                 lessonUnitDto.setId(id++);
                 lessonUnitDto.setLessonId(lessonDto.getId());
-                lessonUnitDto.setSize((double) UNIT / HOUR);
+                lessonUnitDto.setBlockSize((double) UNIT / HOUR);
                 lessonUnitDtos.add(lessonUnitDto);
             }
         }
@@ -91,7 +91,7 @@ public class LessonUnitMapper {
                     assert timeslotDto != null;
                     lessonUnitDto.setTimeslotId(timeslotDto.getId());
                     lessonUnitDto.setClassroomId((long) horario.getIdSala());
-                    lessonUnitDto.setSize((double) UNIT / HOUR);
+                    lessonUnitDto.setBlockSize((double) UNIT / HOUR);
                     lessonUnitDtos.add(lessonUnitDto);
                 }
 
