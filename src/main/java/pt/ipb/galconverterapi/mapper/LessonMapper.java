@@ -55,15 +55,23 @@ public class LessonMapper {
 
         List<LessonDto> lessonDtos = new ArrayList<>();
         for (DetalhesAula detalhesAula : detalhesAulas) {
+            List<LessonDto> lessonSiblingsDtos = new ArrayList<>();
+            int groupCount = 0;
+
             for (DisciplinaCurso disciplinaCurso : disciplinaCursos) {
                 if (detalhesAula.getIdDiscip() == disciplinaCurso.getIdDiscip()
                         && detalhesAula.getIdCurso() == disciplinaCurso.getIdCurso()
                         && detalhesAula.getIdAno() == disciplinaCurso.getIdAno()) {
                     LessonDto lessonDto = new LessonDto();
                     lessonDto.setId((long) detalhesAula.getIdAula());
-                    lessonDto.setName(detalhesAula.getTurma());
                     lessonDto.setSubjectCourseId((long) disciplinaCurso.getId());
                     lessonDto.setSubjectTypeId((long) detalhesAula.getIdTipoAula());
+                    lessonDto.setGroupNumber(0);
+
+                    if (detalhesAula.getTurma() != null) {
+                        groupCount++;
+                        lessonDto.setGroupNumber(detalhesAula.getTurma().charAt(0) - 'A' + 1);
+                    }
 
                     lessonDto.setProfessorIds(aulaDocentes.stream()
                             .filter(aulaDocente -> aulaDocente.getIdAula() == detalhesAula.getIdAula())
@@ -101,8 +109,14 @@ public class LessonMapper {
                     lessonDto.setHoursPerWeek(tipoAulaDisciplina.getHorasSemanais());
                     lessonDto.setBlocks(tipoAulaDisciplina.getNumBlocos());
                     lessonDto.setColor(tipoAula.getCor());
+
+                    lessonSiblingsDtos.add(lessonDto);
                     lessonDtos.add(lessonDto);
                 }
+            }
+
+            for (LessonDto lessonDto : lessonSiblingsDtos) {
+                lessonDto.setGroupCount(groupCount);
             }
         }
 
