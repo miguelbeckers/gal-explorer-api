@@ -19,7 +19,7 @@ public class LessonUnitMapper {
     private final LessonMapper lessonMapper;
     private final TimeslotMapper timeslotMapper;
     private final HorarioRepository horarioRepository;
-    private static final int DURATION = 30;
+    private static final int UNIT = 30;
     private static final int HOUR = 60;
 
     @Autowired
@@ -32,23 +32,24 @@ public class LessonUnitMapper {
     }
 
     public List<LessonUnitDto> map() {
-        return createUnitsWithTimeslotsAndClassroom();
-//        return createUntisWithoutTimeslotsAndClassroom();
+        return createLessonUnitsWithTimeslotsAndClassroom();
+//        return createLessonUnits();
     }
 
-    private List<LessonUnitDto> createUntisWithoutTimeslotsAndClassroom() {
+    private List<LessonUnitDto> createLessonUnits() {
         List<LessonDto> lessonDtos = lessonMapper.map();
 
         List<LessonUnitDto> lessonUnitDtos = new ArrayList<>();
         long id = 1L;
 
         for (LessonDto lessonDto : lessonDtos) {
-            int units = (int) Math.round(lessonDto.getHoursPerWeek() * HOUR / DURATION);
+            int units = (int) Math.round(lessonDto.getHoursPerWeek() * HOUR / UNIT);
 
             for (int i = 0; i < units; i++) {
                 LessonUnitDto lessonUnitDto = new LessonUnitDto();
                 lessonUnitDto.setId(id++);
                 lessonUnitDto.setLessonId(lessonDto.getId());
+                lessonUnitDto.setSize((double) UNIT / HOUR);
                 lessonUnitDtos.add(lessonUnitDto);
             }
         }
@@ -56,7 +57,7 @@ public class LessonUnitMapper {
         return lessonUnitDtos;
     }
 
-    private List<LessonUnitDto> createUnitsWithTimeslotsAndClassroom() {
+    private List<LessonUnitDto> createLessonUnitsWithTimeslotsAndClassroom() {
         List<Horario> horarios = horarioRepository.findAll();
 
         List<LessonDto> lessonDtos = lessonMapper.map();
@@ -66,16 +67,16 @@ public class LessonUnitMapper {
         long id = 1L;
 
         for (LessonDto lessonDto : lessonDtos) {
-            long lessonUnits = Math.round(lessonDto.getHoursPerWeek() * HOUR / DURATION);
+            long lessonUnits = Math.round(lessonDto.getHoursPerWeek() * HOUR / UNIT);
             List<Horario> horariosDaDisciplina = horarios.stream().filter(h -> h.getIdAula() == lessonDto.getId()).toList();
 
             for (Horario horario : horariosDaDisciplina) {
                 Duration duration = Duration.between(horario.getInicio().toLocalTime(), horario.getFim().toLocalTime());
-                int horarioUnits = Math.round((float) duration.toMinutes() / DURATION);
+                int horarioUnits = Math.round((float) duration.toMinutes() / UNIT);
 
                 for (int i = 0; i < horarioUnits; i++) {
-                    LocalTime startTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) i * DURATION));
-                    LocalTime endTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) (i + 1) * DURATION));
+                    LocalTime startTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) i * UNIT));
+                    LocalTime endTime = horario.getInicio().toLocalTime().plus(Duration.ofMinutes((long) (i + 1) * UNIT));
 
                     TimeslotDto timeslotDto = timeslotDtos.stream()
                             .filter(t -> t.getDayOfWeek().equals(DayOfWeek.of(horario.getIdDia()))
@@ -90,6 +91,7 @@ public class LessonUnitMapper {
                     assert timeslotDto != null;
                     lessonUnitDto.setTimeslotId(timeslotDto.getId());
                     lessonUnitDto.setClassroomId((long) horario.getIdSala());
+                    lessonUnitDto.setSize((double) UNIT / HOUR);
                     lessonUnitDtos.add(lessonUnitDto);
                 }
 
