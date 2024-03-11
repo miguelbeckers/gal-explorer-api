@@ -25,7 +25,7 @@ public class HorarioMapper {
         this.timeslotMapper = timeslotMapper;
     }
 
-    public List<Horario> map(List<LessonUnitDto> lessonUntiDtos) {
+    public List<Horario> map(List<LessonUnitDto> lessonUnitDtos) {
         List<TimeslotDto> timeslotDtos = timeslotMapper.map();
 
         HashMap<Long, TimeslotDto> timeslotDtoHashMap = new HashMap<>();
@@ -36,17 +36,17 @@ public class HorarioMapper {
         List<Horario> horarios = new ArrayList<>();
         int id = 1;
 
-        for (LessonUnitDto lessonDto : lessonUntiDtos) {
-            if (lessonDto.getTimeslotId() != null && lessonDto.getLessonId() != null) {
-                TimeslotDto timeslotDto = timeslotDtoHashMap.get(lessonDto.getTimeslotId());
+        for (LessonUnitDto lessonUnitDto : lessonUnitDtos) {
+            if (lessonUnitDto.getTimeslotId() != null && lessonUnitDto.getLessonId() != null) {
+                TimeslotDto timeslotDto = timeslotDtoHashMap.get(lessonUnitDto.getTimeslotId());
 
                 Horario horario = new Horario();
                 horario.setId(id++);
-                horario.setIdSala(lessonDto.getClassroomId().intValue());
+                horario.setIdSala(lessonUnitDto.getClassroomId().intValue());
                 horario.setInicio(Time.valueOf(timeslotDto.getStartTime()));
                 horario.setFim(Time.valueOf(timeslotDto.getEndTime()));
                 horario.setIdDia(timeslotDto.getDayOfWeek().getValue());
-                horario.setIdAula(lessonDto.getLessonId().intValue());
+                horario.setIdAula(lessonUnitDto.getLessonId().intValue());
                 horarios.add(horario);
             }
         }
@@ -64,7 +64,8 @@ public class HorarioMapper {
 
             if (horario.getIdAula() == nextHorario.getIdAula()
                     && horario.getIdDia() == nextHorario.getIdDia()
-                    && horario.getIdSala() == nextHorario.getIdSala()) {
+                    && horario.getIdSala() == nextHorario.getIdSala()
+                    && horario.getFim().equals(nextHorario.getInicio())) {
                 horarios.remove(i + 1);
                 horario.setFim(nextHorario.getFim());
             } else {
