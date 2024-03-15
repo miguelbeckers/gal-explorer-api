@@ -37,7 +37,9 @@ public class HorarioMapper {
         int id = 1;
 
         for (LessonUnitDto lessonUnitDto : lessonUnitDtos) {
-            if (lessonUnitDto.getTimeslotId() != null && lessonUnitDto.getLessonId() != null) {
+            if (lessonUnitDto.getTimeslotId() != null
+                    && lessonUnitDto.getLessonId() != null
+                    && lessonUnitDto.getClassroomId() != null) {
                 TimeslotDto timeslotDto = timeslotDtoHashMap.get(lessonUnitDto.getTimeslotId());
 
                 Horario horario = new Horario();
